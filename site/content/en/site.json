@@ -1,0 +1,15 @@
+{
+  "locale": "en-US",
+  "ogLocale": "en_US",
+  "langName": "English",
+  "skip": "Skip to content",
+  "langNav": "Language",
+  "legalNav": "Legal",
+  "draft": "Draft",
+  "pages": {
+    "home": { "title": "Loquein", "description": "Loquein: coming soon.", "status": "Coming soon." },
+    "privacy-notice": { "title": "Privacy Notice", "description": "Draft: privacy notice." },
+    "privacy": { "title": "Privacy Policy", "description": "Draft: privacy policy." },
+    "cookies": { "title": "Cookie Policy", "description": "Draft: cookie policy." }
+  }
+}

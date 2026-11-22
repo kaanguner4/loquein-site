@@ -1,0 +1,141 @@
+name: Deploy
+
+# main -> preview.loquein.com (behind Cloudflare Access), then the header + privacy specs run against it.
+# Production only by a manual run with target=production, gated by the `production` environment (Kaan approves).
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+    inputs:
+      target:
+        description: "Where to deploy (production waits for approval)"
+        type: choice
+        options: [preview, production]
+        default: preview
+
+permissions:
+  contents: read
+
+concurrency:
+  group: deploy-${{ inputs.target || 'preview' }}
+  cancel-in-progress: false
+
+env:
+  WRANGLER_SEND_METRICS: "false"
+
+jobs:
+  preview:
+    name: deploy preview
+    if: github.ref == 'refs/heads/main' && (github.event_name == 'push' || inputs.target == 'preview')
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    environment:
+      name: preview
+      url: https://preview.loquein.com
+    steps:
+      - name: Check environment secrets
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          CF_ACCESS_CLIENT_ID: ${{ secrets.CF_ACCESS_CLIENT_ID }}
+          CF_ACCESS_CLIENT_SECRET: ${{ secrets.CF_ACCESS_CLIENT_SECRET }}
+        run: |
+          missing=""
+          for name in CLOUDFLARE_API_TOKEN CLOUDFLARE_ACCOUNT_ID CF_ACCESS_CLIENT_ID CF_ACCESS_CLIENT_SECRET; do
+            [ -n "${!name}" ] || missing="$missing $name"
+          done
+          if [ -n "$missing" ]; then
+            echo "::error title=Deploy stopped::environment 'preview' lacks secrets:${missing}; nothing was deployed (README, Deploy)"
+            exit 1
+          fi
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+      - run: npm ci
+      - run: npm run build
+      - run: npm run check:dist
+      - name: Deploy --env preview
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+        run: npx wrangler deploy --env preview
+      - name: Wait until preview serves this build
+        env:
+          CF_ACCESS_CLIENT_ID: ${{ secrets.CF_ACCESS_CLIENT_ID }}
+          CF_ACCESS_CLIENT_SECRET: ${{ secrets.CF_ACCESS_CLIENT_SECRET }}
+        run: |
+          css=$(grep -o '/assets/css/site\.[0-9a-f]*\.css' dist/index.html | head -n 1)
+          for i in $(seq 1 30); do
+            code=$(curl -s -o /dev/null -w '%{http_code}' -H "CF-Access-Client-Id: $CF_ACCESS_CLIENT_ID" \
+              -H "CF-Access-Client-Secret: $CF_ACCESS_CLIENT_SECRET" "https://preview.loquein.com$css")
+            [ "$code" = "200" ] && echo "preview is serving $css" && exit 0
+            sleep 5
+          done
+          echo "::error title=Preview not reachable::https://preview.loquein.com$css answered $code after 150 s"
+          exit 1
+      - name: Install browsers
+        run: npx playwright install --with-deps chromium firefox webkit
+      - name: Header + privacy specs against preview
+        env:
+          BASE_URL: https://preview.loquein.com
+          ALLOWED_COOKIES: CF_Authorization
+          CF_ACCESS_CLIENT_ID: ${{ secrets.CF_ACCESS_CLIENT_ID }}
+          CF_ACCESS_CLIENT_SECRET: ${{ secrets.CF_ACCESS_CLIENT_SECRET }}
+        run: npx playwright test tests/e2e/headers.spec.ts tests/e2e/privacy.spec.ts --reporter=list
+      - name: Upload preview inventory
+        if: ${{ !cancelled() }}
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: preview-inventory
+          path: inventory/inventory.json
+          retention-days: 30
+          if-no-files-found: ignore
+
+  production:
+    name: deploy production
+    if: github.event_name == 'workflow_dispatch' && inputs.target == 'production' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    environment:
+      name: production
+      url: https://loquein.com
+    steps:
+      - name: Check environment secrets
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+        run: |
+          missing=""
+          for name in CLOUDFLARE_API_TOKEN CLOUDFLARE_ACCOUNT_ID; do
+            [ -n "${!name}" ] || missing="$missing $name"
+          done
+          if [ -n "$missing" ]; then
+            echo "::error title=Deploy stopped::environment 'production' lacks secrets:${missing}; nothing was deployed (README, Deploy)"
+            exit 1
+          fi
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+      - run: npm ci
+      - run: npm run build
+      - name: check-dist (production rules; fails while placeholder pages exist)
+        run: npm run check:prod
+      - name: Deploy --env production
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+        run: npx wrangler deploy --env production
+      - name: Install browsers
+        run: npx playwright install --with-deps chromium firefox webkit
+      - name: Header + privacy specs against production (no cookie allowed)
+        env:
+          BASE_URL: https://loquein.com
+        run: npx playwright test tests/e2e/headers.spec.ts tests/e2e/privacy.spec.ts --reporter=list

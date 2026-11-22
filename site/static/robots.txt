@@ -1,0 +1,3 @@
+# Not live yet (LP-go removes this block).
+User-agent: *
+Disallow: /
