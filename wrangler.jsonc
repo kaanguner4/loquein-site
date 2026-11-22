@@ -1,0 +1,35 @@
+{
+  // One Worker per environment: static assets from dist/ plus /api/* in worker/index.ts (step0 b).
+  // Top level = local `wrangler dev` only. Deploys always pass --env preview or --env production.
+  "$schema": "./node_modules/wrangler/config-schema.json",
+  "name": "loquein-site-local",
+  "main": "worker/index.ts",
+  "compatibility_date": "2026-11-15",
+  "workers_dev": false,
+  "preview_urls": false,
+  "assets": {
+    "directory": "dist",
+    "binding": "ASSETS",
+    "run_worker_first": ["/api/*"],
+    "not_found_handling": "404-page",
+    "html_handling": "auto-trailing-slash"
+  },
+  "observability": {
+    "enabled": true,
+    "logs": { "invocation_logs": false }
+  },
+  "env": {
+    "preview": {
+      "name": "loquein-site-preview",
+      "workers_dev": false,
+      "preview_urls": false,
+      "routes": [{ "pattern": "preview.loquein.com", "custom_domain": true }]
+    },
+    "production": {
+      "name": "loquein-site",
+      "workers_dev": false,
+      "preview_urls": false,
+      "routes": [{ "pattern": "loquein.com", "custom_domain": true }]
+    }
+  }
+}

@@ -1,0 +1,161 @@
+/* LP-1a placeholder styles. Brand tokens per the brand kit; LP-1c replaces the layout with the approved design. */
+:root {
+  --ink: #0e0c24;
+  --violet: #5a48f5;
+  --lavender: #b9b4ff;
+  --paper: #f7f5f0;
+  --font-body: "Inter", system-ui, sans-serif;
+  --font-display: "Space Grotesk", "Inter", system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, monospace;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  color-scheme: light;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: 1.0625rem;
+  line-height: 1.6;
+}
+
+a {
+  color: var(--violet);
+}
+
+a:focus-visible {
+  outline: 3px solid var(--violet);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+.skip-link {
+  position: absolute;
+  left: 1rem;
+  top: -4rem;
+  padding: 0.5rem 1rem;
+  background: var(--ink);
+  color: var(--paper);
+  z-index: 10;
+}
+
+.skip-link:focus {
+  top: 1rem;
+}
+
+.site-header {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.25rem clamp(1rem, 4vw, 3rem);
+}
+
+.brand {
+  color: var(--ink);
+  text-decoration: none;
+}
+
+.wordmark,
+.brand {
+  font-family: var(--font-display);
+  font-weight: 600;
+  letter-spacing: -0.02em;
+}
+
+.lq-violet {
+  color: var(--violet);
+}
+
+.lang-switch,
+.legal-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem 1.25rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.lang-switch a,
+.legal-links a {
+  display: inline-block;
+  min-height: 24px;
+  padding: 0.125rem 0;
+}
+
+.lang-switch a[aria-current="page"] {
+  color: var(--ink);
+  font-weight: 600;
+  text-decoration: none;
+}
+
+main {
+  flex: 1;
+  padding: clamp(2rem, 8vw, 6rem) clamp(1rem, 4vw, 3rem);
+}
+
+.hero,
+.legal,
+.not-found {
+  max-width: 48rem;
+}
+
+.wordmark-hero {
+  margin: 0;
+  font-size: clamp(3rem, 12vw, 7rem);
+  line-height: 1;
+}
+
+.status,
+.draft {
+  font-family: var(--font-mono);
+  font-size: 0.9375rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.legal h1,
+.not-found h1 {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 5vw, 3rem);
+  line-height: 1.15;
+  margin: 0 0 1rem;
+}
+
+.site-footer {
+  padding: 1.5rem clamp(1rem, 4vw, 3rem);
+  background: var(--ink);
+  color: var(--paper);
+}
+
+.site-footer a {
+  color: var(--lavender);
+}
+
+.site-footer a:focus-visible {
+  outline-color: var(--lavender);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation: none !important;
+    transition: none !important;
+    scroll-behavior: auto !important;
+  }
+}
