@@ -48,3 +48,25 @@ test("csp: listener catches an injected inline style (control)", async ({ page }
     .poll(() => page.evaluate(() => window.__csp.length), { message: "the CSP listener saw no violation" })
     .toBeGreaterThan(0);
 });
+
+test("csp: home through the intro, every screen tab and every product card", async ({ page }) => {
+  const consoleHits = await listen(page);
+  await page.goto("/", { referer: "https://example.org/", waitUntil: "load" });
+  await expect(page.locator("#intro"), "intro did not end").toHaveCount(0, { timeout: 8000 });
+  const tabs = page.locator("#app [role=tab]");
+  for (let i = 0; i < (await tabs.count()); i++) {
+    await tabs.nth(i).click();
+    await page.waitForTimeout(150);
+  }
+  const cards = page.locator(".bento .more");
+  for (let i = 0; i < (await cards.count()); i++) {
+    await cards.nth(i).click();
+    await page.waitForTimeout(100);
+  }
+  await page.locator("#replay").click();
+  await page.keyboard.press("Escape");
+  await scrollThrough(page);
+  await page.waitForTimeout(300);
+  const violations = await page.evaluate(() => window.__csp);
+  expectNoProblems([...violations, ...consoleHits]);
+});

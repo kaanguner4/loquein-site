@@ -1,25 +1,31 @@
 <!DOCTYPE html>
-<html lang="tr" data-placeholder="lp-1a">
+<html lang="tr">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Sayfa bulunamadı · Page not found · Seite nicht gefunden</title>
 <meta name="robots" content="noindex, nofollow">
-<meta name="theme-color" content="#0E0C24">
+<meta name="theme-color" content="#FFFFFF">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <link rel="stylesheet" href="{{css}}">
 </head>
-<body>
-<main id="main" class="not-found">
-<p class="wordmark wordmark-hero">{{{wordmark}}}</p>
+<body class="page">
+<header class="nav">
+<div class="wrap">
+<a class="brand" href="/" aria-label="Loquein"><svg width="28" height="28" viewBox="0 0 40 40" aria-hidden="true"><circle cx="16.5" cy="15.5" r="9.2" fill="none" stroke="#5A48F5" stroke-width="4.6"/><path d="M25.7 15.5v20" stroke="#5A48F5" stroke-width="4.6" stroke-linecap="round"/><circle cx="16.5" cy="15.5" r="3.4" fill="#0E0C24"/></svg><span>lo<b>que</b>in</span></a>
+</div>
+</header>
+<main id="main">
+<div class="not-found wrap">
 <h1>Sayfa bulunamadı</h1>
 <p lang="en">Page not found.</p>
 <p lang="de">Seite nicht gefunden.</p>
-<ul class="lang-switch">
-<li><a href="/" hreflang="tr">Ana sayfa</a></li>
-<li><a href="/en/" hreflang="en" lang="en">Home</a></li>
-<li><a href="/de/" hreflang="de" lang="de">Startseite</a></li>
+<ul class="home-links lang-switch">
+<li><a class="btn btn-ghost" href="/" hreflang="tr">Ana sayfa</a></li>
+<li><a class="btn btn-ghost" href="/en/" hreflang="en" lang="en">Home</a></li>
+<li><a class="btn btn-ghost" href="/de/" hreflang="de" lang="de">Startseite</a></li>
 </ul>
+</div>
 </main>
 </body>
 </html>

@@ -1,0 +1,124 @@
+{
+  "t": {
+    "hero.s0": "Frage",
+    "hero.s3": "Antwort",
+    "intro.skip": "Intro überspringen",
+    "sc.tg0": "nur lesend",
+    "sec.core": "Ihre Daten",
+    "sec.allow": "ERLAUBT",
+    "sec.wait": "WARTET AUF FREIGABE",
+    "sec.block": "BLOCKIERT",
+    "sec.L1": "Ihr Netz",
+    "sec.x1": "eingehende Verbindung",
+    "sec.L2": "Appliance",
+    "sec.x2": "unsignierte Anfrage",
+    "sec.L3": "Richtlinien-Engine",
+    "sec.x3": "DROP TABLE",
+    "sec.L4": "Nur-Lese-Benutzer",
+    "sec.x4": "unbestätigtes UPDATE",
+    "sec.L1s": "keine eingehenden Ports",
+    "sec.L2s": "nur signierte Anfragen",
+    "sec.L3s": "Rolle · Tabelle · Operation",
+    "sec.L4s": "standardmäßig"
+  },
+  "d": {
+    "hero": {
+      "st": ["SQL wird geschrieben", "Ihre Regeln werden geprüft", "läuft auf Ihrem Server"],
+      "rc": ["nur lesend", "lief auf Ihrem Server"],
+      "Q": [
+        {
+          "q": "Welche Filiale hatte diesen Monat die meisten Buchungen?",
+          "n": 412,
+          "cap": "<b>Buchungen</b> · New York",
+          "sec": "0,38 s",
+          "rows": [
+            ["New York", "412", 1],
+            ["London", "318", 0.77],
+            ["Istanbul", "276", 0.67],
+            ["Los Angeles", "201", 0.49]
+          ]
+        },
+        {
+          "q": "Wie hat sich der Umsatz gegenüber dem Vormonat verändert?",
+          "n": 18,
+          "suf": " %",
+          "cap": "<b>Umsatzplus</b> · ggü. Vormonat",
+          "sec": "0,41 s",
+          "rows": [["November", "1,24 Mio. $", 1], ["Oktober", "1,05 Mio. $", 0.85]]
+        },
+        {
+          "q": "Welche Leistung wird am häufigsten storniert?",
+          "n": 37,
+          "cap": "<b>Stornos</b> · Reifenwechsel",
+          "sec": "0,29 s",
+          "rows": [["Reifenwechsel", "37", 1], ["Bremsencheck", "14", 0.38], ["Klimaservice", "9", 0.24]]
+        }
+      ]
+    },
+    "sql": [
+      "<span class=k>SELECT EXTRACT</span>(ISODOW <span class=k>FROM</span> booked_at), <span class=k>COUNT</span>(*), <span class=k>SUM</span>(amount)",
+      "<span class=k>FROM</span> bookings",
+      "<span class=k>WHERE</span> booked_at &gt;= <span class=s>'2026-11-01'</span>",
+      "<span class=k>GROUP BY</span> 1 <span class=k>ORDER BY</span> 1;"
+    ],
+    "schema": [
+      ["bookings", "ok"],
+      ["invoices", "ok"],
+      ["branches", "ok"],
+      ["services", "ok"],
+      ["customers", "wait"],
+      ["staff", "no"]
+    ],
+    "console": [
+      {
+        "role": "Analyst",
+        "q": "Buchungen pro Filiale, diesen Monat",
+        "sql": "SELECT branch, COUNT(*) FROM bookings WHERE booked_at >= '2026-11-01' GROUP BY branch",
+        "c": [["ok", "SELECT · eine Anweisung"], ["ok", "bookings · erlaubt"], ["ok", "nur lesend"]],
+        "v": "allow",
+        "why": "auf Ihrem Server ausgeführt",
+        "log": "analyst · bookings · ausgeführt"
+      },
+      {
+        "role": "Vertrieb",
+        "q": "Telefonnummern der Kunden",
+        "sql": "SELECT name, phone FROM customers",
+        "c": [["ok", "SELECT · eine Anweisung"], ["wait", "customers · freigabepflichtig"], ["ok", "nur lesend"]],
+        "v": "wait",
+        "why": "liegt in der Freigabe-Warteschlange",
+        "log": "vertrieb · customers · zur Freigabe"
+      },
+      {
+        "role": "Betrieb",
+        "q": "Gehälter der Mitarbeitenden",
+        "sql": "SELECT name, salary FROM staff",
+        "c": [["ok", "SELECT · eine Anweisung"], ["no", "staff · für diese Rolle gesperrt"], ["skip", "—"]],
+        "v": "block",
+        "why": "gesperrte Tabelle, nichts ausgeführt",
+        "log": "betrieb · staff · blockiert: Tabelle"
+      },
+      {
+        "role": "Analyst",
+        "q": "Rechnungstabelle löschen",
+        "sql": "DROP TABLE invoices;",
+        "c": [["ok", "DROP · eine Anweisung"], ["skip", "—"], ["no", "Schemabefehl · immer gesperrt"]],
+        "v": "block",
+        "why": "Schemabefehle laufen für keine Rolle",
+        "log": "analyst · invoices · blockiert: Schemabefehl"
+      },
+      {
+        "role": "Leitung",
+        "q": "Buchung von gestern stornieren",
+        "sql": "UPDATE bookings SET status = 'cancelled' WHERE id = 10234",
+        "c": [
+          ["ok", "UPDATE · eine Anweisung"],
+          ["ok", "bookings · Schreibrecht"],
+          ["wait", "Vorschau + Bestätigung nötig"]
+        ],
+        "v": "wait",
+        "why": "Vorschau gezeigt, wartet auf Bestätigung",
+        "log": "leitung · bookings · Vorschau, wartet"
+      }
+    ]
+  }
+}

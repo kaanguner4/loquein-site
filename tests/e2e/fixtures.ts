@@ -42,6 +42,9 @@ export function accessHeaders(): Record<string, string> {
 // Cookie names a remote host may set (preview: CF_Authorization from Access). Empty locally and on production.
 export const ALLOWED_COOKIES = (process.env.ALLOWED_COOKIES ?? "").split(",").filter(Boolean);
 
+// A page on the site itself, used as the referrer of an internal visit.
+export const INTERNAL_PATH = "/en/privacy/";
+
 export const test = base.extend<{ accessAuth: undefined }>({
   accessAuth: [
     async ({ context, baseURL }, use) => {
@@ -57,6 +60,14 @@ export const test = base.extend<{ accessAuth: undefined }>({
     },
     { auto: true },
   ],
+  // Pages open as for a visitor already on the site (same-origin referrer), so the home intro does not cover them.
+  // An explicit `referer` (also `undefined`) wins: intro.spec.ts and the privacy spec cover arriving from outside.
+  page: async ({ page, baseURL }, use) => {
+    const goto = page.goto.bind(page);
+    const internal = baseURL ? new URL(INTERNAL_PATH, baseURL).href : undefined;
+    page.goto = (url, options) => goto(url, { referer: internal, ...options });
+    await use(page);
+  },
 });
 
 export { expect };

@@ -4,13 +4,28 @@
   "langName": "Deutsch",
   "skip": "Zum Inhalt springen",
   "langNav": "Sprache",
+  "mainNav": "Bereiche",
   "legalNav": "Rechtliches",
   "draft": "Entwurf",
   "pages": {
-    "home": { "title": "Loquein", "description": "Loquein: demnächst verfügbar.", "status": "Demnächst verfügbar." },
-    "privacy-notice": { "title": "Datenschutzhinweis", "description": "Entwurf: Datenschutzhinweis." },
-    "privacy": { "title": "Datenschutzerklärung", "description": "Entwurf: Datenschutzerklärung." },
-    "cookies": { "title": "Cookie-Richtlinie", "description": "Entwurf: Cookie-Richtlinie." },
-    "impressum": { "title": "Impressum", "description": "Entwurf: Impressum." }
+    "home": {
+      "title": "Loquein"
+    },
+    "privacy-notice": {
+      "title": "Datenschutzhinweis",
+      "description": "Entwurf: Datenschutzhinweis."
+    },
+    "privacy": {
+      "title": "Datenschutzerklärung",
+      "description": "Entwurf: Datenschutzerklärung."
+    },
+    "cookies": {
+      "title": "Cookie-Richtlinie",
+      "description": "Entwurf: Cookie-Richtlinie."
+    },
+    "impressum": {
+      "title": "Impressum",
+      "description": "Entwurf: Impressum."
+    }
   }
 }

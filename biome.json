@@ -1,10 +1,19 @@
 {
   "$schema": "./node_modules/@biomejs/biome/configuration_schema.json",
-  "vcs": { "enabled": true, "clientKind": "git", "useIgnoreFile": true },
+  "vcs": {
+    "enabled": true,
+    "clientKind": "git",
+    "useIgnoreFile": true
+  },
   "files": {
     "includes": ["**", "!**/*.md", "!site/assets/fonts", "!site/templates"]
   },
-  "formatter": { "enabled": true, "indentStyle": "space", "indentWidth": 2, "lineWidth": 120 },
+  "formatter": {
+    "enabled": true,
+    "indentStyle": "space",
+    "indentWidth": 2,
+    "lineWidth": 120
+  },
   "linter": {
     "enabled": true,
     "rules": {
@@ -14,5 +23,28 @@
       }
     }
   },
-  "assist": { "enabled": true }
+  "assist": {
+    "enabled": true
+  },
+  "overrides": [
+    {
+      "includes": ["site/assets/css/landing.css", "site/assets/js/home.js"],
+      "linter": {
+        "rules": {
+          "style": {
+            "noDescendingSpecificity": "off",
+            "useTemplate": "off"
+          },
+          "correctness": {
+            "noInnerDeclarations": "off"
+          },
+          "suspicious": {
+            "noDuplicateProperties": "off",
+            "noFocusedTests": "off",
+            "noApproximativeNumericConstant": "off"
+          }
+        }
+      }
+    }
+  ]
 }

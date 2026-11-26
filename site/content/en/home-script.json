@@ -1,0 +1,124 @@
+{
+  "t": {
+    "hero.s0": "Question",
+    "hero.s3": "Answer",
+    "intro.skip": "Skip intro",
+    "sc.tg0": "read-only",
+    "sec.core": "Your data",
+    "sec.allow": "ALLOWED",
+    "sec.wait": "AWAITING APPROVAL",
+    "sec.block": "BLOCKED",
+    "sec.L1": "Your network",
+    "sec.x1": "inbound connection",
+    "sec.L2": "Appliance",
+    "sec.x2": "unsigned request",
+    "sec.L3": "Policy engine",
+    "sec.x3": "DROP TABLE",
+    "sec.L4": "Read-only user",
+    "sec.x4": "unconfirmed UPDATE",
+    "sec.L1s": "no inbound ports",
+    "sec.L2s": "signed requests only",
+    "sec.L3s": "role · table · operation",
+    "sec.L4s": "by default"
+  },
+  "d": {
+    "hero": {
+      "st": ["writing SQL", "checking your rules", "running on your server"],
+      "rc": ["read-only", "ran on your server"],
+      "Q": [
+        {
+          "q": "Which branch had the most bookings this month?",
+          "n": 412,
+          "cap": "<b>bookings</b> · New York",
+          "sec": "0.38 s",
+          "rows": [
+            ["New York", "412", 1],
+            ["London", "318", 0.77],
+            ["Istanbul", "276", 0.67],
+            ["Los Angeles", "201", 0.49]
+          ]
+        },
+        {
+          "q": "How did revenue change from last month?",
+          "n": 18,
+          "suf": "%",
+          "cap": "<b>revenue up</b> · vs last month",
+          "sec": "0.41 s",
+          "rows": [["November", "$1.24M", 1], ["October", "$1.05M", 0.85]]
+        },
+        {
+          "q": "Which service gets canceled the most?",
+          "n": 37,
+          "cap": "<b>cancellations</b> · Tire change",
+          "sec": "0.29 s",
+          "rows": [["Tire change", "37", 1], ["Brake check", "14", 0.38], ["A/C service", "9", 0.24]]
+        }
+      ]
+    },
+    "sql": [
+      "<span class=k>SELECT EXTRACT</span>(ISODOW <span class=k>FROM</span> booked_at), <span class=k>COUNT</span>(*), <span class=k>SUM</span>(amount)",
+      "<span class=k>FROM</span> bookings",
+      "<span class=k>WHERE</span> booked_at &gt;= <span class=s>'2026-11-01'</span>",
+      "<span class=k>GROUP BY</span> 1 <span class=k>ORDER BY</span> 1;"
+    ],
+    "schema": [
+      ["bookings", "ok"],
+      ["invoices", "ok"],
+      ["branches", "ok"],
+      ["services", "ok"],
+      ["customers", "wait"],
+      ["staff", "no"]
+    ],
+    "console": [
+      {
+        "role": "Analyst",
+        "q": "This month's bookings by branch",
+        "sql": "SELECT branch, COUNT(*) FROM bookings WHERE booked_at >= '2026-11-01' GROUP BY branch",
+        "c": [["ok", "SELECT · single statement"], ["ok", "bookings · allowed"], ["ok", "read only"]],
+        "v": "allow",
+        "why": "ran on your server",
+        "log": "analyst · bookings · ran"
+      },
+      {
+        "role": "Sales",
+        "q": "Customer phone numbers",
+        "sql": "SELECT name, phone FROM customers",
+        "c": [["ok", "SELECT · single statement"], ["wait", "customers · needs approval"], ["ok", "read only"]],
+        "v": "wait",
+        "why": "sent to an admin's approval queue",
+        "log": "sales · customers · sent for approval"
+      },
+      {
+        "role": "Operations",
+        "q": "Staff salaries",
+        "sql": "SELECT name, salary FROM staff",
+        "c": [["ok", "SELECT · single statement"], ["no", "staff · blocked for this role"], ["skip", "—"]],
+        "v": "block",
+        "why": "blocked table, nothing ran",
+        "log": "operations · staff · blocked: table"
+      },
+      {
+        "role": "Analyst",
+        "q": "Delete the invoices table",
+        "sql": "DROP TABLE invoices;",
+        "c": [["ok", "DROP · single statement"], ["skip", "—"], ["no", "schema command · always off"]],
+        "v": "block",
+        "why": "schema commands never run, for any role",
+        "log": "analyst · invoices · blocked: schema command"
+      },
+      {
+        "role": "Management",
+        "q": "Cancel yesterday's booking",
+        "sql": "UPDATE bookings SET status = 'cancelled' WHERE id = 10234",
+        "c": [
+          ["ok", "UPDATE · single statement"],
+          ["ok", "bookings · write allowed"],
+          ["wait", "needs preview + confirm"]
+        ],
+        "v": "wait",
+        "why": "preview shown, waiting for a yes",
+        "log": "management · bookings · preview, awaiting confirm"
+      }
+    ]
+  }
+}

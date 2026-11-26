@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="{{lang}}" data-placeholder="lp-1a">
+<html lang="{{lang}}"{{{htmlAttrs}}}>
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -9,29 +9,35 @@
 <link rel="canonical" href="{{canonical}}">
 {{{alternates}}}
 <meta property="og:locale" content="{{ogLocale}}">
-<meta name="theme-color" content="#0E0C24">
+<meta name="theme-color" content="#FFFFFF">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+{{{preloads}}}
 <link rel="stylesheet" href="{{css}}">
+{{{scripts}}}
 </head>
-<body>
+<body class="{{bodyClass}}">
 <a class="skip-link" href="#main">{{skip}}</a>
-<header class="site-header">
-<a class="brand" href="{{homeHref}}">{{{wordmark}}}</a>
-<nav class="lang-nav" aria-label="{{langNav}}">
-<ul class="lang-switch">
-{{{langSwitch}}}
-</ul>
+<header class="nav" id="nav">
+<div class="wrap">
+<a class="brand" href="{{homeHref}}" aria-label="Loquein"><svg width="28" height="28" viewBox="0 0 40 40" aria-hidden="true"><circle cx="16.5" cy="15.5" r="9.2" fill="none" stroke="#5A48F5" stroke-width="4.6"/><path d="M25.7 15.5v20" stroke="#5A48F5" stroke-width="4.6" stroke-linecap="round"/><circle cx="16.5" cy="15.5" r="3.4" fill="#0E0C24"/></svg><span>lo<b>que</b>in</span></a>
+<nav class="nav-links" aria-label="{{mainNav}}">
+<a href="{{homeHref}}#nasil">{{navHow}}</a><a href="{{homeHref}}#urun">{{navProduct}}</a><a href="{{homeHref}}#guvenlik">{{navSecurity}}</a><a href="{{homeHref}}#kurulum">{{navInstall}}</a><a href="{{homeHref}}#sss">{{navFaq}}</a>
 </nav>
+<nav class="lang lang-switch" aria-label="{{langNav}}">{{{langSwitch}}}</nav>
+<a class="btn btn-primary" href="{{homeHref}}#demo">{{navCta}}</a>
+</div>
 </header>
 <main id="main">
 {{{main}}}
 </main>
-<footer class="site-footer">
-<nav aria-label="{{legalNav}}">
-<ul class="legal-links">
-{{{legalLinks}}}
-</ul>
-</nav>
+<footer>
+<div class="wrap">
+<a class="brand" href="{{homeHref}}" aria-label="Loquein"><svg width="22" height="22" viewBox="0 0 40 40" aria-hidden="true"><circle cx="16.5" cy="15.5" r="9.2" fill="none" stroke="#5A48F5" stroke-width="4.6"/><path d="M25.7 15.5v20" stroke="#5A48F5" stroke-width="4.6" stroke-linecap="round"/><circle cx="16.5" cy="15.5" r="3.4" fill="#0E0C24"/></svg><span class="wm-sm">lo<b>que</b>in</span></a>
+<span class="tag">{{tag}}</span>
+<span>{{rights}}</span>
+<nav class="legal-links" aria-label="{{legalNav}}">{{{legalLinks}}}<a href="{{homeHref}}#demo">{{contact}}</a></nav>
+{{{replay}}}
+</div>
 </footer>
 </body>
 </html>
