@@ -23,7 +23,7 @@ async function firstAsset(api: APIRequestContext, pattern: RegExp, from: string)
 const cssPath = (api: APIRequestContext) => firstAsset(api, /href="(\/assets\/css\/[^"]+\.css)"/, "/");
 const fontPath = async (api: APIRequestContext) =>
   firstAsset(api, /url\("(\/assets\/fonts\/[^"]+\.woff2)"\)/, await cssPath(api));
-const homeJsPath = (api: APIRequestContext) => firstAsset(api, /src="(\/assets\/js\/home-tr\.[^"]+\.js)"/, "/");
+const homeJsPath = (api: APIRequestContext) => firstAsset(api, /src="(\/assets\/js\/home-en\.[^"]+\.js)"/, "/");
 const jsOnPath = (api: APIRequestContext) => firstAsset(api, /src="(\/assets\/js\/js-on\.[^"]+\.js)"/, "/");
 const avifPath = (api: APIRequestContext) => firstAsset(api, /srcset="(\/assets\/img\/app\/[^" ]+\.avif)/, "/");
 const webpPath = (api: APIRequestContext) => firstAsset(api, /src="(\/assets\/img\/app\/[^"]+\.webp)"/, "/");
@@ -41,7 +41,7 @@ const CASES: Case[] = [
   })),
   {
     name: "legal TR",
-    path: "/kvkk-aydinlatma-metni/",
+    path: "/tr/kvkk-aydinlatma-metni/",
     status: 200,
     csp: CSP.page,
     cache: CACHE.revalidate,
@@ -49,7 +49,7 @@ const CASES: Case[] = [
   },
   {
     name: "legal EN",
-    path: "/en/privacy/",
+    path: "/privacy/",
     status: 200,
     csp: CSP.page,
     cache: CACHE.revalidate,
@@ -140,12 +140,12 @@ const CASES: Case[] = [
   },
   { name: "_headers is not served", path: "/_headers", status: 404, csp: CSP.page, cache: CACHE.revalidate },
   {
-    name: "redirect /en -> /en/",
-    path: "/en",
+    name: "redirect /tr -> /tr/",
+    path: "/tr",
     status: 307,
     csp: CSP.page,
     cache: CACHE.revalidate,
-    extra: { location: "/en/" },
+    extra: { location: "/tr/" },
   },
   {
     name: "api POST /api/demo (stub)",

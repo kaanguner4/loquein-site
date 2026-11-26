@@ -63,7 +63,7 @@ test("images: alt text differs per language for every screenshot", async ({ page
 });
 
 test("images: every screenshot loads, through every screen tab", async ({ page, browserName }) => {
-  await page.goto("/en/", { waitUntil: "load" });
+  await page.goto("/", { waitUntil: "load" });
   const tabs = page.locator("#app [role=tab]");
   const problems: string[] = [];
   for (let i = 0; i < (await tabs.count()); i++) {

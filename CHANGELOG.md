@@ -1,5 +1,14 @@
 # Changelog
 
+## LP-1e — 2026-11-26
+- Paths: English is the first language. English at the root (`/`, `/privacy-notice/`, `/privacy/`, `/cookies/`), Turkish under
+  `/tr/`, German stays under `/de/`; language switch order EN, TR, DE; hreflang x-default is `/`. No redirect by language.
+- Contact: the contact section shows and links `hello@loquein.com`; security.txt Contact is `mailto:security@loquein.com`.
+- Wording: contact heading "Bize ulaşın" / "Contact us" / "Kontakt", button "E-posta gönderin" / "Send an email" / "E-Mail
+  senden"; the contact copy no longer mentions a form.
+- Header sign-in link in all languages ("Giriş yap" / "Sign in" / "Anmelden"), target from the build setting `APP_URL`
+  (production app by default; the preview deploy builds with the local app). check-dist allows exactly those two targets.
+
 ## LP-1d — 2026-11-26
 - Deploy: "Wait until preview serves this build" counts a curl error (exit 6, name not yet resolvable on a first deploy) as one
   failed try; each try has a 10 s limit and logs the HTTP code and curl exit.

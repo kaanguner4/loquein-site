@@ -3,7 +3,11 @@ import { existsSync, readdirSync, readFileSync, statSync } from "node:fs";
 import path from "node:path";
 
 export const ORIGIN = "https://loquein.com";
-export const LANGS = ["tr", "en", "de"];
+// English first (also the order of the language switch and of hreflang), then Turkish, then German.
+export const LANGS = ["en", "tr", "de"];
+
+// The only two targets of the header sign-in link: the production app, and Kaan's local app for the preview demo.
+export const APP_URLS = { production: "https://app.loquein.com", preview: "http://localhost:5173" };
 
 export function walk(dir, base = dir) {
   const out = [];

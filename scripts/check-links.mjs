@@ -28,8 +28,9 @@ export function checkLinks(dir) {
   let checked = 0;
   const check = (file, fromPath, ref) => {
     checked++;
+    if (EXTERNAL_LINK_ALLOWLIST.includes(ref)) return;
     if (/^mailto:/i.test(ref)) {
-      if (!EXTERNAL_LINK_ALLOWLIST.includes(ref)) problems.push(`${file}: ${ref} -> mailto not in the allowlist`);
+      problems.push(`${file}: ${ref} -> mailto not in the allowlist`);
       return;
     }
     let target = ref;

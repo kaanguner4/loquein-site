@@ -16,7 +16,7 @@ for (const route of ROUTES) {
         .locator('link[rel="alternate"][hreflang]')
         .evaluateAll((els) => els.map((e) => [e.getAttribute("hreflang"), e.getAttribute("href")]));
       const expected = LANGS.filter((l) => route.paths[l]).map((l) => [l, `${ORIGIN}${route.paths[l]}`]);
-      const xDefault = route.paths.tr ?? (route.paths[LANGS.find((l) => route.paths[l]) as "tr"] as string);
+      const xDefault = route.paths.en ?? (route.paths[LANGS.find((l) => route.paths[l]) as "en"] as string);
       expected.push(["x-default", `${ORIGIN}${xDefault}`]);
       const fmt = (pairs: (string | null)[][]) =>
         pairs

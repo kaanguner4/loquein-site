@@ -1,24 +1,24 @@
 {
-  "$comment": "Every page and its path per language. A page without a language has no entry for it; hreflang, the language switch, the footer and sitemap.xml are generated from this file.",
+  "$comment": "Every page and its path per language. English is the first language and lives at the root; Turkish is under /tr/, German under /de/. A page without a language has no entry for it; hreflang, the language switch, the footer and sitemap.xml are generated from this file.",
   "pages": [
-    { "id": "home", "template": "home", "paths": { "tr": "/", "en": "/en/", "de": "/de/" } },
+    { "id": "home", "template": "home", "paths": { "en": "/", "tr": "/tr/", "de": "/de/" } },
     {
       "id": "privacy-notice",
       "template": "legal",
       "footer": true,
-      "paths": { "tr": "/kvkk-aydinlatma-metni/", "en": "/en/privacy-notice/", "de": "/de/datenschutz-hinweis/" }
+      "paths": { "en": "/privacy-notice/", "tr": "/tr/kvkk-aydinlatma-metni/", "de": "/de/datenschutz-hinweis/" }
     },
     {
       "id": "privacy",
       "template": "legal",
       "footer": true,
-      "paths": { "tr": "/gizlilik/", "en": "/en/privacy/", "de": "/de/datenschutz/" }
+      "paths": { "en": "/privacy/", "tr": "/tr/gizlilik/", "de": "/de/datenschutz/" }
     },
     {
       "id": "cookies",
       "template": "legal",
       "footer": true,
-      "paths": { "tr": "/cerez-politikasi/", "en": "/en/cookies/", "de": "/de/cookies/" }
+      "paths": { "en": "/cookies/", "tr": "/tr/cerez-politikasi/", "de": "/de/cookies/" }
     },
     { "id": "impressum", "template": "legal", "footer": true, "paths": { "de": "/de/impressum/" } }
   ]

@@ -2,7 +2,7 @@
 // Every problem is one line: "<file>: <rule>".
 import { existsSync } from "node:fs";
 import path from "node:path";
-import { fileFor, htmlFiles, LANGS, ORIGIN, read, tags, textOf, urlPathOf } from "./lib/dist.mjs";
+import { APP_URLS, fileFor, htmlFiles, LANGS, ORIGIN, read, tags, textOf, urlPathOf } from "./lib/dist.mjs";
 
 const DAY = 86_400_000;
 const RESOURCE_ATTRS = {
@@ -12,8 +12,9 @@ const RESOURCE_ATTRS = {
   source: ["src", "srcset"],
   iframe: ["src"],
 };
-// Links to other sites need an entry here (none yet). mailto: only to the published contact.
-export const EXTERNAL_LINK_ALLOWLIST = ["mailto:guner.kaan@outlook.com"];
+// Links to other sites need an entry here: the published contact and the two sign-in targets (APP_URLS).
+// A production build refuses the preview target (checkSignIn, checkHtml).
+export const EXTERNAL_LINK_ALLOWLIST = ["mailto:hello@loquein.com", ...Object.values(APP_URLS)];
 const GERMAN_QUESTION_CLAIM = /auf Deutsch (fragen|stellen)|Fragen auf Deutsch|deutsche Fragen/i;
 
 const srcsetUrls = (value) =>
@@ -53,6 +54,7 @@ function checkHtml(dir, file, html, { production }) {
       const href = tag.attrs.href;
       const external = /^[a-z][a-z0-9+.-]*:/i.test(href) && !href.startsWith(`${ORIGIN}/`);
       if (external && !EXTERNAL_LINK_ALLOWLIST.includes(href)) add(`external link ${href} not in the allowlist`);
+      if (production && href === APP_URLS.preview) add(`link ${href} (preview sign-in target) in a production build`);
     }
     if (tag.name === "img") {
       if (!tag.attrs.width || !tag.attrs.height) add(`<img ${tag.attrs.src ?? ""}> without width/height`);
@@ -72,6 +74,19 @@ function checkHtml(dir, file, html, { production }) {
       }
     }
   }
+  return problems;
+}
+
+// The header sign-in link: exactly one per page, same tab, to one of the two APP_URLS (production: only the app).
+function checkSignIn(file, html, { production }) {
+  const problems = [];
+  const add = (rule) => problems.push(`${file}: ${rule}`);
+  const links = tags(html).filter((t) => t.name === "a" && (t.attrs.class ?? "").split(/\s+/).includes("signin"));
+  if (links.length !== 1) return [`${file}: expected exactly one sign-in link (a.signin), found ${links.length}`];
+  const { href = "", target } = links[0].attrs;
+  const allowed = production ? [APP_URLS.production] : Object.values(APP_URLS);
+  if (!allowed.includes(href)) add(`sign-in link ${href} is not ${allowed.join(" or ")}`);
+  if (target) add(`sign-in link has target="${target}" (it opens in the same tab)`);
   return problems;
 }
 
@@ -140,7 +155,10 @@ export function checkDist(dir, { production = false, now = Date.now() } = {}) {
   for (const file of htmlFiles(dir)) {
     const html = read(path.join(dir, file));
     problems.push(...checkHtml(dir, file, html, { production }));
-    if (file !== "404.html") problems.push(...checkPageMeta(dir, file, html));
+    if (file !== "404.html") {
+      problems.push(...checkPageMeta(dir, file, html));
+      problems.push(...checkSignIn(file, html, { production }));
+    }
   }
   problems.push(...checkSecurityTxt(dir, now));
   return problems;
