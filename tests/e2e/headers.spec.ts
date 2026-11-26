@@ -200,7 +200,11 @@ function problemsFor(c: Case, res: APIResponse): string[] {
   const values = (name: string) => all.filter((h) => h.name === name).map((h) => h.value);
   const expectOne = (name: string, expected: string) => {
     const got = values(name);
-    if (got.length !== 1) out.push(`${name}: expected exactly one header, got ${got.length}`);
+    // A wrong count names every value and every header name, so the log says which layer added the extra one.
+    if (got.length !== 1)
+      out.push(
+        `${name}: expected exactly one header, got ${got.length}: ${JSON.stringify(got)}; response header names: ${all.map((h) => h.name).join(",")}`,
+      );
     else if (got[0] !== expected) out.push(`${name}: "${got[0]}" != expected "${expected}"`);
   };
   if (res.status() !== c.status) out.push(`status ${res.status()} != expected ${c.status}`);

@@ -105,6 +105,15 @@ for (const visit of visits) {
       }
     }
     for (const u of thirdParty) problems.push(`third-party request ${u}`);
+    if (thirdParty.length) {
+      // Which element asked for it: a script in the built page, or one the edge added to the HTML.
+      const html = await page.content();
+      const tags = [...html.matchAll(/<(?:script|link|img|iframe)\b[^>]*>/gi)]
+        .map((m) => m[0])
+        .filter((t) => thirdParty.some((u) => t.includes(new URL(u).host)))
+        .map((t) => t.replace(/(data-cf-beacon|nonce)=("[^"]*"|'[^']*')/gi, "$1=…"));
+      problems.push(`elements naming those hosts in the DOM: ${tags.length ? tags.join(" ") : "none"}`);
+    }
     for (const f of failed) problems.push(`failed request ${f}`);
     expectNoProblems(problems);
   });
