@@ -3,6 +3,8 @@
 ## LP-1d — 2026-11-26
 - Deploy: "Wait until preview serves this build" counts a curl error (exit 6, name not yet resolvable on a first deploy) as one
   failed try; each try has a 10 s limit and logs the HTTP code and curl exit.
+- Headers: "/" carried two Content-Security-Policy headers on the deployed Worker (its own and the one from "/*"; evidence in
+  deploy run 45729927458). The page CSP moved from "/*" to "/:seg" and "/:seg/*", which do not match "/", so "/" has one rule.
 - Header and privacy specs name the evidence on failure: every value and header name when a header count is wrong, and the
   DOM elements that name a third-party host.
 
