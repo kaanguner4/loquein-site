@@ -77,15 +77,29 @@ describe("non-API paths", () => {
 });
 
 describe("header sources stay in sync", () => {
-  // Parse the "/*" block of _headers: Worker responses must carry the same common set as static assets.
+  // Parse one rule block of _headers: Worker responses must carry the same common set as static assets.
   const lines = readFileSync(path.join(ROOT, "site/static/_headers"), "utf8").split("\n");
-  const start = lines.indexOf("/*");
-  const block: Record<string, string> = {};
-  for (const line of lines.slice(start + 1)) {
-    if (!line.startsWith("  ")) break;
-    const i = line.indexOf(":");
-    block[line.slice(0, i).trim().toLowerCase()] = line.slice(i + 1).trim();
-  }
+  const parseBlock = (rule: string): Record<string, string> => {
+    const start = lines.indexOf(rule);
+    expect(start, `rule ${rule} in _headers`).toBeGreaterThanOrEqual(0);
+    const out: Record<string, string> = {};
+    for (const line of lines.slice(start + 1)) {
+      if (!line.startsWith("  ")) break;
+      const i = line.indexOf(":");
+      out[line.slice(0, i).trim().toLowerCase()] = line.slice(i + 1).trim();
+    }
+    return out;
+  };
+  // The page CSP is not in "/*" (it would reach "/" next to the home CSP); two rules that skip "/" carry it.
+  const common = parseBlock("/*");
+  const pageCsp = parseBlock("/:seg");
+  const block = { ...common, ...pageCsp };
+
+  it("the page CSP is set by rules that do not match '/', never by '/*'", () => {
+    expect(common["content-security-policy"]).toBeUndefined();
+    expect(parseBlock("/:seg/*")).toEqual(pageCsp);
+    expect(parseBlock("/")["content-security-policy"]).toBe(CSP.home);
+  });
 
   it("worker COMMON_HEADERS == the common part of _headers /*", () => {
     const lower = Object.fromEntries(Object.entries(COMMON_HEADERS).map(([k, v]) => [k.toLowerCase(), v]));
