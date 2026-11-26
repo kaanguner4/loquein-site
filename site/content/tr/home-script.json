@@ -1,0 +1,120 @@
+{
+  "t": {
+    "hero.s0": "Soru",
+    "hero.s3": "Cevap",
+    "intro.skip": "Girişi geç",
+    "sc.tg0": "salt okunur",
+    "sec.core": "Veriniz",
+    "sec.allow": "İZİN VERİLDİ",
+    "sec.wait": "ONAY BEKLİYOR",
+    "sec.block": "ENGELLENDİ",
+    "sec.L1": "Ağınız",
+    "sec.x1": "dışarıdan bağlantı",
+    "sec.L2": "Appliance",
+    "sec.x2": "imzasız istek",
+    "sec.L3": "Politika motoru",
+    "sec.x3": "DROP TABLE",
+    "sec.L4": "Salt okunur kullanıcı",
+    "sec.x4": "teyitsiz UPDATE",
+    "sec.L1s": "gelen port yok",
+    "sec.L2s": "yalnızca imzalı istek",
+    "sec.L3s": "rol · tablo · işlem",
+    "sec.L4s": "varsayılan"
+  },
+  "d": {
+    "hero": {
+      "st": ["SQL yazılıyor", "kurallarınız denetleniyor", "sunucunuzda çalışıyor"],
+      "rc": ["salt okunur", "sunucunuzda çalıştı"],
+      "Q": [
+        {
+          "q": "Bu ay en çok randevu alan şube hangisi?",
+          "n": 412,
+          "cap": "<b>randevu</b> · New York · Kasım",
+          "sec": "0,38 sn",
+          "rows": [
+            ["New York", "412", 1],
+            ["London", "318", 0.77],
+            ["Istanbul", "276", 0.67],
+            ["Los Angeles", "201", 0.49]
+          ]
+        },
+        {
+          "q": "Ciro geçen aya göre ne kadar değişti?",
+          "n": 18,
+          "pre": "%",
+          "cap": "<b>ciro artışı</b> · geçen aya göre",
+          "sec": "0,41 sn",
+          "rows": [["Kasım", "$1,24 mn", 1], ["Ekim", "$1,05 mn", 0.85]]
+        },
+        {
+          "q": "En çok iptal edilen hizmet hangisi?",
+          "n": 37,
+          "cap": "<b>iptal</b> · Lastik değişimi",
+          "sec": "0,29 sn",
+          "rows": [["Lastik değişimi", "37", 1], ["Fren kontrolü", "14", 0.38], ["Klima bakımı", "9", 0.24]]
+        }
+      ]
+    },
+    "sql": [
+      "<span class=k>SELECT EXTRACT</span>(ISODOW <span class=k>FROM</span> tarih), <span class=k>COUNT</span>(*), <span class=k>SUM</span>(tutar)",
+      "<span class=k>FROM</span> randevular",
+      "<span class=k>WHERE</span> tarih &gt;= <span class=s>'2026-11-01'</span>",
+      "<span class=k>GROUP BY</span> 1 <span class=k>ORDER BY</span> 1;"
+    ],
+    "schema": [
+      ["randevular", "ok"],
+      ["faturalar", "ok"],
+      ["subeler", "ok"],
+      ["hizmetler", "ok"],
+      ["musteriler", "wait"],
+      ["personel", "no"]
+    ],
+    "console": [
+      {
+        "role": "Analist",
+        "q": "Şubelere göre bu ayki randevular",
+        "sql": "SELECT sube, COUNT(*) FROM randevular WHERE tarih >= '2026-11-01' GROUP BY sube",
+        "c": [["ok", "SELECT · tek ifade"], ["ok", "randevular · izinli"], ["ok", "salt okuma"]],
+        "v": "allow",
+        "why": "sorgu sizin sunucunuzda çalıştı",
+        "log": "analist · randevular · çalıştı"
+      },
+      {
+        "role": "Satış",
+        "q": "Müşterilerin telefon numaraları",
+        "sql": "SELECT ad, telefon FROM musteriler",
+        "c": [["ok", "SELECT · tek ifade"], ["wait", "musteriler · onaya bağlı"], ["ok", "salt okuma"]],
+        "v": "wait",
+        "why": "yöneticinin onay kutusuna düştü",
+        "log": "satış · musteriler · onaya gönderildi"
+      },
+      {
+        "role": "Operasyon",
+        "q": "Personel maaşları",
+        "sql": "SELECT ad, maas FROM personel",
+        "c": [["ok", "SELECT · tek ifade"], ["no", "personel · bu rol için kapalı"], ["skip", "—"]],
+        "v": "block",
+        "why": "kapalı tablo, sorgu çalışmadı",
+        "log": "operasyon · personel · engellendi: kapalı tablo"
+      },
+      {
+        "role": "Analist",
+        "q": "Fatura tablosunu sil",
+        "sql": "DROP TABLE faturalar;",
+        "c": [["ok", "DROP · tek ifade"], ["skip", "—"], ["no", "şema komutu · her zaman kapalı"]],
+        "v": "block",
+        "why": "şema komutları hiçbir rol için çalışmaz",
+        "log": "analist · faturalar · engellendi: şema komutu"
+      },
+      {
+        "role": "Yönetim",
+        "q": "Dünkü randevuyu iptal et",
+        "sql": "UPDATE randevular SET durum = 'İptal' WHERE id = 10234",
+        "c": [["ok", "UPDATE · tek ifade"], ["ok", "randevular · yazma izni var"], ["wait", "önizleme + onay gerekir"]],
+        "v": "wait",
+        "why": "önizleme gösterildi, onay bekleniyor",
+        "log": "yönetim · randevular · önizleme, onay bekliyor"
+      }
+    ]
+  }
+}

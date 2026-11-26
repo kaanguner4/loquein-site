@@ -23,6 +23,12 @@ async function firstAsset(api: APIRequestContext, pattern: RegExp, from: string)
 const cssPath = (api: APIRequestContext) => firstAsset(api, /href="(\/assets\/css\/[^"]+\.css)"/, "/");
 const fontPath = async (api: APIRequestContext) =>
   firstAsset(api, /url\("(\/assets\/fonts\/[^"]+\.woff2)"\)/, await cssPath(api));
+const homeJsPath = (api: APIRequestContext) => firstAsset(api, /src="(\/assets\/js\/home-tr\.[^"]+\.js)"/, "/");
+const jsOnPath = (api: APIRequestContext) => firstAsset(api, /src="(\/assets\/js\/js-on\.[^"]+\.js)"/, "/");
+const avifPath = (api: APIRequestContext) => firstAsset(api, /srcset="(\/assets\/img\/app\/[^" ]+\.avif)/, "/");
+const webpPath = (api: APIRequestContext) => firstAsset(api, /src="(\/assets\/img\/app\/[^"]+\.webp)"/, "/");
+const uiSvgPath = async (api: APIRequestContext) =>
+  firstAsset(api, /url\("(\/assets\/img\/ui\/[^"]+\.svg)"\)/, await cssPath(api));
 
 const CASES: Case[] = [
   ...HOME_PATHS.map((p) => ({
@@ -59,6 +65,46 @@ const CASES: Case[] = [
   },
   { name: "css", path: cssPath, status: 200, csp: CSP.page, cache: CACHE.immutable, contentType: /^text\/css/ },
   { name: "font", path: fontPath, status: 200, csp: CSP.page, cache: CACHE.immutable, contentType: /^font\/woff2/ },
+  {
+    name: "home script",
+    path: homeJsPath,
+    status: 200,
+    csp: CSP.page,
+    cache: CACHE.immutable,
+    contentType: /javascript/,
+  },
+  {
+    name: "js-on script",
+    path: jsOnPath,
+    status: 200,
+    csp: CSP.page,
+    cache: CACHE.immutable,
+    contentType: /javascript/,
+  },
+  {
+    name: "screenshot avif",
+    path: avifPath,
+    status: 200,
+    csp: CSP.page,
+    cache: CACHE.immutable,
+    contentType: /^image\/avif/,
+  },
+  {
+    name: "screenshot webp",
+    path: webpPath,
+    status: 200,
+    csp: CSP.page,
+    cache: CACHE.immutable,
+    contentType: /^image\/webp/,
+  },
+  {
+    name: "ui svg",
+    path: uiSvgPath,
+    status: 200,
+    csp: CSP.page,
+    cache: CACHE.immutable,
+    contentType: /^image\/svg\+xml/,
+  },
   {
     name: "robots.txt",
     path: "/robots.txt",

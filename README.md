@@ -5,8 +5,10 @@ a zero-dependency Node script and served by one Cloudflare Worker with static as
 `/api/*` (the demo form endpoint, a `503 not_ready` stub until LP-1b). No cookies, no storage, no third-party requests;
 every response carries a strict CSP and the security header set from `site/static/_headers` / `worker/headers.ts`.
 
-Status: **placeholder** (LP-1a). Pages say "coming soon", legal pages are empty drafts, everything is `noindex`
-and `robots.txt` disallows all. A production deploy is refused while placeholder pages exist (`npm run check:prod`).
+Status: **preview** (LP-1c). The home pages carry the approved landing design (v13) with the real app screenshots;
+the demo form arrives in LP-1b (until then the contact section is a mail link). Legal pages are still draft shells,
+everything is `noindex` and `robots.txt` disallows all. A production deploy is refused while a draft page exists
+(`npm run check:prod`).
 
 ## Run locally
 
@@ -19,9 +21,13 @@ npm run dev        # build + wrangler dev on https://127.0.0.1:8787 (self-signed
 npm run verify     # everything CI runs: lint, typecheck, build, dist/link/HTML checks, wrangler dry-run, unit, e2e
 ```
 
-Layout: `site/` (templates, content per language, CSS, fonts, static files incl. `_headers`, `robots.txt`,
-`.well-known/security.txt`), `worker/` (Worker code), `scripts/` (build + dist checks), `tests/unit/` (vitest),
-`tests/e2e/` (Playwright: headers, privacy inventory, CSP, axe, i18n, no-JS, assets). The privacy spec writes the
+Layout: `site/` (templates, content per language, CSS, JS, fonts, images, static files incl. `_headers`,
+`robots.txt`, `.well-known/security.txt`), `worker/` (Worker code), `scripts/` (build + dist checks), `tests/unit/`
+(vitest), `tests/e2e/` (Playwright: headers, privacy inventory, CSP, axe, i18n, no-JS, assets, intro, images).
+
+Home page: `site/templates/home.html` + `site/content/<lang>/home.json` (copy) + `home-script.json` (scene data for
+`site/assets/js/home.js`), styles in `site/assets/css/landing.css`. Screenshots: `node scripts/images.mjs <dir>` turns
+the UI-close PNGs (`<screen>-<lang>.png`) into the committed AVIF/WebP files in `site/assets/img/app/`. The privacy spec writes the
 cookie/storage inventory to `inventory/inventory.json` (a CI artifact).
 
 ## Deploy

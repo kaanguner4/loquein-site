@@ -1,4 +1,333 @@
-<section id="hero" class="hero">
-<h1 class="wordmark wordmark-hero">{{{wordmark}}}</h1>
-<p class="status">{{status}}</p>
+<!-- Home page sections (approved landing v13, LP-1c). Placeholders: see renderHome in scripts/build.mjs; copy in content/<lang>/home.json -->
+<svg width="0" height="0" class="defs" aria-hidden="true"><defs>
+ <filter id="isoSoft" x="-40%" y="-40%" width="180%" height="180%"><feGaussianBlur stdDeviation="6"/></filter>
+ <filter id="isoSoft2" x="-20%" y="-60%" width="140%" height="220%"><feGaussianBlur stdDeviation="2.6"/></filter>
+ <linearGradient id="isoCyl" x1="0" x2="1"><stop offset="0" stop-color="#D9F2E8"/><stop offset=".4" stop-color="#FFFFFF"/><stop offset="1" stop-color="#AFE0CD"/></linearGradient>
+ <linearGradient id="isoScr" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2C2766"/><stop offset="1" stop-color="#15122F"/></linearGradient>
+ <linearGradient id="isoWall" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#C0365C" stop-opacity=".02"/><stop offset="1" stop-color="#C0365C" stop-opacity=".16"/></linearGradient>
+ <radialGradient id="avA" cx=".35" cy=".3" r=".8"><stop offset="0" stop-color="#B7AEFF"/><stop offset="1" stop-color="#5A48F5"/></radialGradient>
+ <radialGradient id="avB" cx=".35" cy=".3" r=".8"><stop offset="0" stop-color="#FFD3DE"/><stop offset="1" stop-color="#E27A97"/></radialGradient>
+ <radialGradient id="avC" cx=".35" cy=".3" r=".8"><stop offset="0" stop-color="#C8F1DC"/><stop offset="1" stop-color="#3FB383"/></radialGradient>
+ <radialGradient id="beadG" cx=".35" cy=".3" r=".8"><stop offset="0" stop-color="#fff"/><stop offset="1" stop-color="#E4E0FC"/></radialGradient>
+</defs></svg>
+<section class="hero" id="hero" aria-labelledby="h1">
+  <div class="wrap hero-grid">
+    <div class="copy">
+      <div class="kicker rise"><i></i><span>{{hero.kicker}}</span></div>
+      <h1 id="h1" class="rise">{{hero.h1}}</h1>
+      <p class="lead rise">{{hero.lead}}</p>
+      <div class="cta-row rise">
+        <a class="btn btn-primary" href="#demo"><span>{{nav.cta}}</span> <span class="arr">→</span></a>
+        <a class="btn btn-ghost" href="#nasil">{{hero.cta2}}</a>
+      </div>
+      <div class="meta rise"><span>PostgreSQL</span><span>Microsoft SQL Server</span><span>{{hero.m3}}</span></div>
+    </div>
+    <div class="stage">
+      <div class="hsbox" id="hsBox" aria-hidden="true"><div class="hs" id="hs">
+        <svg id="hsLogo" viewBox="0 0 40 40">
+          <defs><filter id="hsFl" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="1.1"/></filter></defs>
+          <ellipse cx="16.5" cy="38.9" rx="9" ry="1" fill="rgba(14,12,36,.13)" filter="url(#hsFl)"/>
+          <g id="hsGrp"><circle id="hsArc" cx="16.5" cy="15.5" r="9.2" fill="none" stroke="#5A48F5" stroke-width="4.6" stroke-linecap="round" transform="rotate(-90 16.5 15.5)"/></g>
+          <path id="hsStem" d="M25.7 15.5v20" stroke="#5A48F5" stroke-width="4.6" stroke-linecap="round" fill="none"/>
+          <circle id="hsDot" cx="16.5" cy="15.5" r="3.4" fill="#0E0C24"/>
+        </svg>
+        <div class="hq"><div class="lbl7" id="hsLq">{{sc.qL}}</div><div class="txt" id="hsTxt"><span id="hsQ"></span><span class="cr" id="hsCr"></span></div><div class="rule"><i id="hsProg"></i></div><div class="hst" id="hsSt"><span></span><span></span><span></span></div></div>
+        <div class="ha"><div class="num" id="hsNum"></div><div class="cap" id="hsCap"></div><div class="rows" id="hsRows"></div></div>
+        <div class="base" id="hsBase"></div>
+        <div class="hrc" id="hsRc"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="7" width="10" height="7" rx="1.8"/><path d="M5.5 7V5a2.5 2.5 0 0 1 5 0v2"/></svg><span id="hsRcT"></span></div>
+      </div></div>
+    </div>
+  </div>
+  <div class="scrollhint" aria-hidden="true"><i></i></div>
+</section>
+
+<!-- ================= STORY A: how it works ================= -->
+<section class="story" id="nasil" aria-labelledby="h-a">
+  <div class="pin"><div class="wrap">
+    <div>
+      <div class="eyebrow">{{story.eyebrow}}</div>
+      <h2 id="h-a">{{story.h2}}</h2>
+      <div class="steps-nav" id="navA">
+        <div class="rail"><b></b></div>
+        <div class="sn on"><div class="t"><small>01</small><span>{{story.t0}}</span></div><p>{{story.p0}}</p></div>
+        <div class="sn"><div class="t"><small>02</small><span>{{story.t1}}</span></div><p>{{story.p1}}</p></div>
+        <div class="sn"><div class="t"><small>03</small><span>{{story.t2}}</span></div><p>{{story.p2}}</p></div>
+        <div class="sn"><div class="t"><small>04</small><span>{{story.t3}}</span></div><p>{{story.p3}}</p></div>
+        <div class="sn"><div class="t"><small>05</small><span>{{story.t4}}</span></div><p>{{story.p4}}</p></div>
+        <div class="sn"><div class="t"><small>06</small><span>{{story.t5}}</span></div><p>{{story.p5}}</p></div>
+      </div>
+      <div class="pct" aria-hidden="true"><span>{{story.progress}}</span> <b class="pctv">{{pct:0}}</b></div>
+    </div>
+    <div class="scene-box" id="boxA">
+      <div class="scene" id="sceneA">
+        <div class="cam" id="camA"><div class="cami" id="camAi">
+        <svg class="iso" id="isoA" width="720" height="300" viewBox="0 0 720 300" aria-hidden="true"></svg>
+        <div class="ilabel" id="lTeam">{{sc.team}}</div>
+        <div class="ilabel" id="lCentral">{{sc.central}}</div>
+        <div class="ilabel" id="lApp">Appliance</div>
+        <div class="ilabel" id="lDb">{{sc.db}}</div>
+        <div class="ilabel" id="lAi">{{sc.ai}}</div>
+        <div class="zlabel" id="lZone">{{sc.zone}}</div>
+        <div class="tlabel" id="lHttps">HTTPS</div>
+        <div class="tlabel" id="lTun">{{sc.tunnel}}</div>
+        <div class="anno ok" id="pAiOk"><span class="ai"><svg viewBox="0 0 16 16"><path d="M3.5 8.5l3 3 6-7"/></svg></span><span>{{sc.aiOk}}</span></div>
+        <div class="anno no" id="pAiNo"><span class="ai"><svg viewBox="0 0 16 16"><path d="M4.5 4.5l7 7M11.5 4.5l-7 7"/></svg></span><span>{{sc.aiNo}}</span></div>
+        <div class="anno no" id="pKeeps"><span class="ai"><svg viewBox="0 0 16 16"><ellipse cx="8" cy="4.5" rx="4.6" ry="1.8"/><path d="M3.4 4.5v7c0 1 2 1.8 4.6 1.8s4.6-.8 4.6-1.8v-7"/><path d="M2.5 13.5l11-11"/></svg></span><span>{{sc.keeps}}</span></div>
+        <div class="anno vi" id="pStays"><span class="ai"><svg viewBox="0 0 16 16"><rect x="3.5" y="7" width="9" height="7" rx="1.6"/><path d="M5.5 7V5.2a2.5 2.5 0 0 1 5 0V7"/></svg></span><span>{{sc.stays}}</span></div>
+        <div class="pktag" id="pkTag"></div>
+        </div></div>
+        <div class="doc" id="docA">
+        <div class="sc" id="sQ"><span class="pfx">›</span><span class="txt" id="sQt">{{sc.q}}</span><span class="cur"></span><span class="who">{{sc.who}}</span></div>
+        <div class="sc" id="sCipher"><div class="chd s0"><span>{{sc.wire}}</span><span>TLS</span></div><div id="cipher"></div>
+          <div class="wbad"><span><svg viewBox="0 0 16 16"><path d="M3.5 8.5l3 3 6-7"/></svg><i>{{sc.w1}}</i></span><span><svg viewBox="0 0 16 16"><path d="M3.5 8.5l3 3 6-7"/></svg><i>{{sc.w2}}</i></span><span><svg viewBox="0 0 16 16"><path d="M3.5 8.5l3 3 6-7"/></svg><i>{{sc.w3}}</i></span></div></div>
+        <div class="sc" id="sCode">
+          <div class="chd"><span>{{sc.sqlhd}}</span><span>PostgreSQL</span></div>
+          <div class="cl"><span class="sq"></span><span class="tg">{{sc.tg0}}</span></div>
+          <div class="cl"><span class="sq"></span><span class="tg">{{sc.tg1}}</span></div>
+          <div class="cl"><span class="sq"></span><span class="tg">{{sc.tg2}}</span></div>
+          <div class="cl"><span class="sq"></span><span class="tg">{{sc.tg3}}</span></div>
+          <div id="scan"></div>
+          <div id="strip"><i></i><b class="s1">{{sc.strip}}</b><span>{{sc.stripMeta}}</span></div>
+        </div>
+        <div class="sc" id="sGate"><span class="lk"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#1E8A5A" stroke-width="2" stroke-linecap="round"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg></span><b>{{sc.gate}}</b><span>{{sc.role}}</span></div>
+        <div class="sc" id="sChart">
+          <div class="seg" id="seg" role="group" aria-label="{{attr:sc.views}}"><button type="button" data-v="bar" aria-pressed="true"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 13V8M8 13V3M13 13V6"/></svg><span>{{sc.bar}}</span></button><button type="button" data-v="line" aria-pressed="false"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M2 11.5l4-4 3 2.5L14 4"/></svg><span>{{sc.line}}</span></button><button type="button" data-v="pie" aria-pressed="false"><svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="5.6"/><path d="M8 2.4V8l4.2 3.6"/></svg><span>{{sc.pie}}</span></button><button type="button" data-v="scatter" aria-pressed="false"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M2.5 2.5v11h11" /><circle cx="6" cy="10" r="1.1"/><circle cx="8.6" cy="7.4" r="1.1"/><circle cx="11.6" cy="5" r="1.1"/></svg><span>{{sc.scatter}}</span></button><button type="button" data-v="table" aria-pressed="false"><svg viewBox="0 0 16 16" aria-hidden="true"><rect x="2.5" y="3" width="11" height="10" rx="1.6"/><path d="M2.5 6.4h11M2.5 9.7h11M6.6 6.4V13"/></svg><span>{{sc.table}}</span></button></div>
+          <div class="l"><div class="lbl7">{{sc.ansL}}</div><div class="num" id="sNum">0</div><div class="cap">{{sc.cap}}</div><div class="cap2">{{sc.cap2}}</div></div>
+          <div class="cr">
+            <div class="views" id="views">
+              <div class="view on" data-v="bar"><div class="vbars"><div class="bc"><b>210</b><i data-h="0.587"></i><span>{{sc.d0}}</span></div><div class="bc"><b>195</b><i data-h="0.545"></i><span>{{sc.d1}}</span></div><div class="bc"><b>240</b><i data-h="0.670"></i><span>{{sc.d2}}</span></div><div class="bc"><b>255</b><i data-h="0.712"></i><span>{{sc.d3}}</span></div><div class="bc"><b>285</b><i data-h="0.796"></i><span>{{sc.d4}}</span></div><div class="bc top"><b>315</b><i data-h="0.880"></i><span>{{sc.d5}}</span></div></div></div>
+              <div class="view" data-v="line"><svg class="vline" viewBox="0 0 398 210"><line x1="0" y1="22" x2="398" y2="22" class="gr"/><line x1="0" y1="76" x2="398" y2="76" class="gr"/><line x1="0" y1="130" x2="398" y2="130" class="gr"/><path class="ar" d="M28.2 184 L28.2 76.0 L96.5 83.7 L164.8 60.6 L233.1 52.9 L301.4 37.4 L369.7 22.0 L369.7 184 Z"/><polyline class="ln" pathLength="100" points="28.2,76.0 96.5,83.7 164.8,60.6 233.1,52.9 301.4,37.4 369.7,22.0"/><circle class="pt s2" cx="28.2" cy="76.0" r="4"/><text class="xl" x="28.2" y="204">{{sc.d0}}</text><circle class="pt s3" cx="96.5" cy="83.7" r="4"/><text class="xl" x="96.5" y="204">{{sc.d1}}</text><circle class="pt s4" cx="164.8" cy="60.6" r="4"/><text class="xl" x="164.8" y="204">{{sc.d2}}</text><circle class="pt s5" cx="233.1" cy="52.9" r="4"/><text class="xl" x="233.1" y="204">{{sc.d3}}</text><circle class="pt s6" cx="301.4" cy="37.4" r="4"/><text class="xl" x="301.4" y="204">{{sc.d4}}</text><circle class="pt top s7" cx="369.7" cy="22.0" r="5.5"/><text class="xl" x="369.7" y="204">{{sc.d5}}</text><text class="vl" x="369.7" y="10.0">315</text><line x1="0" y1="184" x2="398" y2="184" class="ax"/></svg></div>
+              <div class="view" data-v="pie"><svg class="vpie" viewBox="0 0 200 200"><g transform="rotate(-90 100 100)"><circle class="sl s8" cx="100" cy="100" r="62" stroke="#B9B4FF" stroke-dashoffset="-0.00"/><circle class="sl s9" cx="100" cy="100" r="62" stroke="#7B6CFF" stroke-dashoffset="-54.54"/><circle class="sl s10" cx="100" cy="100" r="62" stroke="#5A48F5" stroke-dashoffset="-105.18"/><circle class="sl s11" cx="100" cy="100" r="62" stroke="#2D7DF6" stroke-dashoffset="-167.51"/><circle class="sl s12" cx="100" cy="100" r="62" stroke="#F2428F" stroke-dashoffset="-233.73"/><circle class="sl s13" cx="100" cy="100" r="62" stroke="#FF7A2F" stroke-dashoffset="-307.75"/></g><text class="pt1" x="100" y="100">{{sc.total}}</text><text class="pt2" x="100" y="119">{{sc.totalL}}</text></svg><div class="leg"><div class="lr s2"><i class="s14"></i><span>{{sc.f0}}</span><b class="pc">{{pct:14}}</b></div><div class="lr s3"><i class="s15"></i><span>{{sc.f1}}</span><b class="pc">{{pct:13}}</b></div><div class="lr s4"><i class="s16"></i><span>{{sc.f2}}</span><b class="pc">{{pct:16}}</b></div><div class="lr s5"><i class="s17"></i><span>{{sc.f3}}</span><b class="pc">{{pct:17}}</b></div><div class="lr s6"><i class="s18"></i><span>{{sc.f4}}</span><b class="pc">{{pct:19}}</b></div><div class="lr top s7"><i class="s19"></i><span>{{sc.f5}}</span><b class="pc">{{pct:21}}</b></div></div></div>
+              <div class="view" data-v="scatter"><svg class="vline vscat" viewBox="0 0 398 210"><line class="gr" x1="44" y1="138.8" x2="398" y2="138.8"/><text class="yl" x="36" y="142.8">15</text><line class="gr" x1="44" y1="86.8" x2="398" y2="86.8"/><text class="yl" x="36" y="90.8">20</text><line class="gr" x1="44" y1="34.8" x2="398" y2="34.8"/><text class="yl" x="36" y="38.8">25</text><text class="xl" x="89.3" y="204">200</text><text class="xl" x="202.7" y="204">250</text><text class="xl" x="316.0" y="204">300</text><text class="at" x="44" y="10">{{sc.revK}}</text><text class="at end" x="398" y="176">{{sc.thN}}</text><line class="ax" x1="44" y1="184" x2="398" y2="184"/><line class="ay" x1="44" y1="18" x2="44" y2="184"/><path class="tr" d="M70 158.5 L364 23.5"/><circle class="pt s2" cx="112.0" cy="146.3" r="5"/><text class="pl" x="112.0" y="135.3" text-anchor="middle">{{sc.d0}}</text><circle class="pt s3" cx="78.0" cy="152.8" r="5"/><text class="pl" x="88.0" y="168.8" text-anchor="start">{{sc.d1}}</text><circle class="pt s4" cx="180.0" cy="112.6" r="5"/><text class="pl" x="171.0" y="105.6" text-anchor="end">{{sc.d2}}</text><circle class="pt s5" cx="214.0" cy="114.5" r="5"/><text class="pl" x="224.0" y="128.5" text-anchor="start">{{sc.d3}}</text><circle class="pt s6" cx="282.0" cy="69.5" r="5"/><text class="pl" x="282.0" y="58.5" text-anchor="middle">{{sc.d4}}</text><circle class="pt top s7" cx="350.0" cy="32.7" r="7"/><text class="pl top" x="337.0" y="36.7" text-anchor="end">{{sc.d5}}</text></svg></div><div class="view" data-v="table"><div class="vtab"><div class="tr th"><span>{{sc.thDay}}</span><span>{{sc.thN}}</span><span>{{sc.thRev}}</span><span>{{sc.thShare}}</span></div><div class="tr s2"><span>{{sc.f0}}</span><span>210</span><span>{{sc.r0}}</span><span><i><u class="s20"></u></i><b class="pc">{{pct:14}}</b></span></div><div class="tr s3"><span>{{sc.f1}}</span><span>195</span><span>{{sc.r1}}</span><span><i><u class="s21"></u></i><b class="pc">{{pct:13}}</b></span></div><div class="tr s4"><span>{{sc.f2}}</span><span>240</span><span>{{sc.r2}}</span><span><i><u class="s22"></u></i><b class="pc">{{pct:16}}</b></span></div><div class="tr s5"><span>{{sc.f3}}</span><span>255</span><span>{{sc.r3}}</span><span><i><u class="s23"></u></i><b class="pc">{{pct:17}}</b></span></div><div class="tr s6"><span>{{sc.f4}}</span><span>285</span><span>{{sc.r4}}</span><span><i><u class="s24"></u></i><b class="pc">{{pct:19}}</b></span></div><div class="tr top s7"><span>{{sc.f5}}</span><span>315</span><span>{{sc.r5}}</span><span><i><u class="s25"></u></i><b class="pc">{{pct:21}}</b></span></div></div></div>
+            </div>
+          </div>
+        </div>
+        </div>
+      </div>
+    </div>
+  </div></div>
+</section>
+
+<!-- ================= PRODUCT ================= -->
+<section class="sec bg-white" id="urun" aria-labelledby="h-prod">
+  <div class="wrap">
+    <div class="reveal"><div class="eyebrow">{{prod.eyebrow}}</div><h2 class="h2" id="h-prod">{{prod.h2}}</h2></div>
+    <div class="bento">
+      <div class="tile wide reveal t1"><div class="flip"><div class="face front">
+        <div class="shot"><div class="bar"><i></i><i></i><i></i><span>app.loquein.com</span></div>
+          <div class="slot">{{shot:product-wide}}</div></div>
+        <div class="cap"><h3>{{prod.wideH}}</h3><p>{{prod.wideP}}</p></div>
+      <button type="button" class="more" aria-expanded="false" aria-label="{{attr:prod.more}}"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 3v10M3 8h10"/></svg></button></div><div class="face back" aria-hidden="true"><div class="bkl">{{prod.b1L}}</div><h3>{{prod.b1H}}</h3><ul><li>{{prod.b1a}}</li><li>{{prod.b1b}}</li><li>{{prod.b1c}}</li></ul></div></div></div>
+      <div class="tile reveal t2"><div class="flip"><div class="face front">
+        <div class="art" aria-hidden="true"><div class="follow"><div class="fr"><span class="fav">AY</span><div class="qq">{{prod.f1}}</div></div><div class="ctx">{{prod.fctx}}</div><div class="fr r"><div class="qq two">{{prod.f2}}</div><span class="fav">AY</span></div></div></div>
+        <h3>{{prod.fH}}</h3><p>{{prod.fP}}</p>
+      <button type="button" class="more" aria-expanded="false" aria-label="{{attr:prod.more}}"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 3v10M3 8h10"/></svg></button></div><div class="face back" aria-hidden="true"><div class="bkl">{{prod.b2L}}</div><h3>{{prod.b2H}}</h3><ul><li>{{prod.b2a}}</li><li>{{prod.b2b}}</li><li>{{prod.b2c}}</li></ul></div></div></div>
+      <div class="tile reveal t3"><div class="flip"><div class="face front">
+        <div class="art" aria-hidden="true"><div class="morph"><span class="say">{{prod.say}}</span>
+          <svg viewBox="0 0 280 140"><line x1="0" y1="139" x2="280" y2="139" stroke="#E7E3DA"/>
+            <rect class="mb" x="10" y="70" width="34" height="69" rx="5"/><rect class="mb" x="64" y="48" width="34" height="91" rx="5"/><rect class="mb" x="118" y="82" width="34" height="57" rx="5"/><rect class="mb" x="172" y="36" width="34" height="103" rx="5"/><rect class="mb hl" x="226" y="12" width="34" height="127" rx="5"/>
+            <polyline class="ml" points="27,70 81,48 135,82 189,36 243,12"/>
+            <circle class="mp" cx="27" cy="70" r="4"/><circle class="mp" cx="81" cy="48" r="4"/><circle class="mp" cx="135" cy="82" r="4"/><circle class="mp" cx="189" cy="36" r="4"/><circle class="mp" cx="243" cy="12" r="5"/>
+          </svg></div></div>
+        <h3>{{prod.mH}}</h3><p>{{prod.mP}}</p>
+      <button type="button" class="more" aria-expanded="false" aria-label="{{attr:prod.more}}"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 3v10M3 8h10"/></svg></button></div><div class="face back" aria-hidden="true"><div class="bkl">{{prod.b3L}}</div><h3>{{prod.b3H}}</h3><ul><li>{{prod.b3a}}</li><li>{{prod.b3b}}</li><li>{{prod.b3c}}</li></ul></div></div></div>
+      <div class="tile reveal t4"><div class="flip"><div class="face front">
+        <div class="art" aria-hidden="true"><div class="appr" id="appr">
+          <div class="ah"><span class="av">S</span><div><b>{{prod.gWho}}</b><small>{{prod.gAgo}}</small></div><span class="st"><i></i><span class="w">{{prod.gWait}}</span><span class="d">{{prod.gOk}}</span></span></div>
+          <div class="aq">{{prod.gChip}}</div>
+          <code>{{prod.gSql}}</code>
+          <div class="ab"><span class="rj">{{prod.gRej}}</span><span class="ap">{{prod.gApp}}</span></div>
+        </div></div>
+        <h3>{{prod.gH}}</h3><p>{{prod.gP}}</p>
+      <button type="button" class="more" aria-expanded="false" aria-label="{{attr:prod.more}}"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 3v10M3 8h10"/></svg></button></div><div class="face back" aria-hidden="true"><div class="bkl">{{prod.b4L}}</div><h3>{{prod.b4H}}</h3><ul><li>{{prod.b4a}}</li><li>{{prod.b4b}}</li><li>{{prod.b4c}}</li></ul></div></div></div>
+      <div class="tile reveal t5"><div class="flip"><div class="face front">
+        <div class="art" aria-hidden="true"><div><div class="matrix">
+          <div class="mr mh"><span></span><span>{{prod.t1}}</span><span>{{prod.t2}}</span><span>{{prod.t3}}</span><span>{{prod.t4}}</span></div>
+          <div class="mr"><span class="wh">{{prod.r1}}</span><i class="dot ok"></i><i class="dot ok"></i><i class="dot ok"></i><i class="dot wait"></i></div>
+          <div class="mr"><span class="wh">{{prod.r2}}</span><i class="dot ok"></i><i class="dot ok"></i><i class="dot wait"></i><i class="dot no"></i></div>
+          <div class="mr"><span class="wh">{{prod.r3}}</span><i class="dot ok"></i><i class="dot no"></i><i class="dot no"></i><i class="dot no"></i></div>
+        </div><div class="legend"><span><i class="dot ok"></i><b class="s26">{{prod.lOk}}</b></span><span><i class="dot wait"></i><b class="s26">{{prod.lWait}}</b></span><span><i class="dot no"></i><b class="s26">{{prod.lNo}}</b></span></div></div></div>
+        <h3>{{prod.xH}}</h3><p>{{prod.xP}}</p>
+      <button type="button" class="more" aria-expanded="false" aria-label="{{attr:prod.more}}"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 3v10M3 8h10"/></svg></button></div><div class="face back" aria-hidden="true"><div class="bkl">{{prod.b5L}}</div><h3>{{prod.b5H}}</h3><ul><li>{{prod.b5a}}</li><li>{{prod.b5b}}</li><li>{{prod.b5c}}</li></ul></div></div></div>
+      <div class="tile reveal t6"><div class="flip"><div class="face front"><div class="art" aria-hidden="true"><div class="keyc" id="keyc"><div class="kl">{{prod.aiKey}}</div><div class="kr"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="8" cy="15" r="4"/><path d="M11 12l8.5-8.5M16 7l2.5 2.5M13.5 9.5l2 2"/></svg><code>•••• •••• •••• 4f2a</code><span class="kb">{{prod.aiTest}}</span></div><div class="st"><i></i><span class="w">{{prod.aiIdle}}</span><span class="d"><b>{{prod.aiOk}}</b> · 412 ms</span></div></div></div><h3>{{prod.aiH}}</h3><p>{{prod.aiP}}</p><button type="button" class="more" aria-expanded="false" aria-label="{{attr:prod.more}}"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 3v10M3 8h10"/></svg></button></div><div class="face back" aria-hidden="true"><div class="bkl">{{prod.b6L}}</div><h3>{{prod.b6H}}</h3><ul><li>{{prod.b6a}}</li><li>{{prod.b6b}}</li><li>{{prod.b6c}}</li></ul></div></div></div>
+      <div class="tile w2 reveal t7"><div class="flip"><div class="face front"><div class="art" aria-hidden="true"><div class="wrc" id="wrc"><div class="wh"><b>{{prod.wrAsk}}</b><span class="wt">{{prod.wrTag}}</span></div><code>{{prod.wrSql}}</code><div class="wd"><span class="wcol">{{prod.wrCol}}</span><span class="wfrom">{{prod.wrFrom}}</span><svg viewBox="0 0 24 12" aria-hidden="true"><path d="M1 6h20M16 1.5L21.5 6 16 10.500"/></svg><span class="wto">{{prod.wrTo}}</span></div><div class="wf"><span class="st"><i></i><span class="w">{{prod.wrWait}}</span><span class="d">{{prod.wrDone}}</span></span><span class="rj">{{prod.wrNo}}</span><span class="ap">{{prod.wrYes}}</span></div></div></div><h3>{{prod.wrH}}</h3><p>{{prod.wrP}}</p><button type="button" class="more" aria-expanded="false" aria-label="{{attr:prod.more}}"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 3v10M3 8h10"/></svg></button></div><div class="face back" aria-hidden="true"><div class="bkl">{{prod.b7L}}</div><h3>{{prod.b7H}}</h3><ul><li>{{prod.b7a}}</li><li>{{prod.b7b}}</li><li>{{prod.b7c}}</li></ul></div></div></div>
+    </div>
+    <div class="gal reveal"><div class="gal-h"><h3>{{gal.h}}</h3><p>{{gal.p}}</p></div><div class="gal-g"><div class="gc"><div class="gn"><small>01</small><b>{{gal.n2}}</b></div><div class="gv"><svg viewBox="0 0 240 120" aria-hidden="true"><rect x="6" y="47.0" width="34" height="57.0" rx="4" fill="#D8D3FB"/><rect x="53" y="26.7" width="34" height="77.3" rx="4" fill="#D8D3FB"/><rect x="100" y="58.0" width="34" height="46.0" rx="4" fill="#D8D3FB"/><rect x="147" y="39.6" width="34" height="64.4" rx="4" fill="#D8D3FB"/><rect x="194" y="12.0" width="34" height="92.0" rx="4" fill="#FF7A2F"/><line x1="0" y1="104" x2="240" y2="104" class="gax"/></svg></div><div class="gq">{{gal.q2}}</div></div><div class="gc"><div class="gn"><small>02</small><b>{{gal.n5}}</b></div><div class="gv"><svg viewBox="0 0 240 120" aria-hidden="true"><polyline points="8.0,70 52.8,58 97.6,64 142.4,44 187.2,36 232.0,18" fill="none" stroke="#F2428F" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/><circle cx="8.0" cy="70" r="3.6" fill="#fff" stroke="#F2428F" stroke-width="2"/><circle cx="52.8" cy="58" r="3.6" fill="#fff" stroke="#F2428F" stroke-width="2"/><circle cx="97.6" cy="64" r="3.6" fill="#fff" stroke="#F2428F" stroke-width="2"/><circle cx="142.4" cy="44" r="3.6" fill="#fff" stroke="#F2428F" stroke-width="2"/><circle cx="187.2" cy="36" r="3.6" fill="#fff" stroke="#F2428F" stroke-width="2"/><circle cx="232.0" cy="18" r="3.6" fill="#fff" stroke="#F2428F" stroke-width="2"/><line x1="0" y1="104" x2="240" y2="104" class="gax"/></svg></div><div class="gq">{{gal.q5}}</div></div><div class="gc"><div class="gn"><small>03</small><b>{{gal.n7}}</b></div><div class="gv"><svg viewBox="0 0 240 120" aria-hidden="true"><g transform="rotate(-90 60 60)"><circle cx="60" cy="60" r="38" fill="none" stroke="#5A48F5" stroke-width="20" stroke-dasharray="107.83 400" stroke-dashoffset="-0.00"/><circle cx="60" cy="60" r="38" fill="none" stroke="#F2428F" stroke-width="20" stroke-dasharray="62.47 400" stroke-dashoffset="-109.83"/><circle cx="60" cy="60" r="38" fill="none" stroke="#FF7A2F" stroke-width="20" stroke-dasharray="38.59 400" stroke-dashoffset="-174.30"/><circle cx="60" cy="60" r="38" fill="none" stroke="#B9B4FF" stroke-width="20" stroke-dasharray="21.88 400" stroke-dashoffset="-214.88"/></g><rect x="136" y="24" width="9" height="9" rx="2.5" fill="#5A48F5"/><text x="152" y="32" class="glg">{{gal.p1}}</text><text x="238" y="32" class="glg gpc pc" text-anchor="end" data-n="46">46%</text><rect x="136" y="44" width="9" height="9" rx="2.5" fill="#F2428F"/><text x="152" y="52" class="glg">{{gal.p2}}</text><text x="238" y="52" class="glg gpc pc" text-anchor="end" data-n="27">27%</text><rect x="136" y="64" width="9" height="9" rx="2.5" fill="#FF7A2F"/><text x="152" y="72" class="glg">{{gal.p3}}</text><text x="238" y="72" class="glg gpc pc" text-anchor="end" data-n="17">17%</text><rect x="136" y="84" width="9" height="9" rx="2.5" fill="#B9B4FF"/><text x="152" y="92" class="glg">{{gal.p4}}</text><text x="238" y="92" class="glg gpc pc" text-anchor="end" data-n="10">10%</text></svg></div><div class="gq">{{gal.q7}}</div></div><div class="gc"><div class="gn"><small>04</small><b>{{gal.n8}}</b></div><div class="gv"><svg viewBox="0 0 240 120" aria-hidden="true"><line x1="14" y1="92" x2="226" y2="14" stroke="#12A378" stroke-width="1.4" stroke-dasharray="3 4" opacity=".6"/><circle cx="22" cy="84" r="4.4" fill="#12A378" opacity=".85"/><circle cx="38" cy="76" r="4.4" fill="#12A378" opacity=".85"/><circle cx="50" cy="80" r="4.4" fill="#12A378" opacity=".85"/><circle cx="64" cy="62" r="4.4" fill="#12A378" opacity=".85"/><circle cx="80" cy="66" r="4.4" fill="#12A378" opacity=".85"/><circle cx="92" cy="50" r="4.4" fill="#12A378" opacity=".85"/><circle cx="108" cy="56" r="4.4" fill="#12A378" opacity=".85"/><circle cx="120" cy="40" r="4.4" fill="#12A378" opacity=".85"/><circle cx="140" cy="44" r="4.4" fill="#12A378" opacity=".85"/><circle cx="156" cy="30" r="4.4" fill="#12A378" opacity=".85"/><circle cx="172" cy="34" r="4.4" fill="#12A378" opacity=".85"/><circle cx="196" cy="18" r="4.4" fill="#12A378" opacity=".85"/><circle cx="212" cy="24" r="4.4" fill="#12A378" opacity=".85"/><circle cx="70" cy="88" r="4.4" fill="#12A378" opacity=".85"/><circle cx="130" cy="64" r="4.4" fill="#12A378" opacity=".85"/><circle cx="180" cy="46" r="4.4" fill="#12A378" opacity=".85"/><line x1="0" y1="104" x2="240" y2="104" class="gax"/><line x1="0" y1="4" x2="0" y2="104" class="gax"/></svg></div><div class="gq">{{gal.q8}}</div></div><div class="gc"><div class="gn"><small>05</small><b>{{gal.n9}}</b></div><div class="gv"><svg viewBox="0 0 240 120" aria-hidden="true"><text x="0" y="14" class="gth">{{gal.thTime}}</text><text x="74" y="14" class="gth">{{gal.thBranch}}</text><text x="240" y="14" class="gth" text-anchor="end">{{gal.thAmount}}</text><line x1="0" y1="22" x2="240" y2="22" class="gax"/><text x="0" y="42" class="gtd">09:30</text><text x="74" y="42" class="gtb">New York</text><text x="240" y="42" class="gtd" text-anchor="end">950</text><line x1="0" y1="50" x2="240" y2="50" class="grl"/><text x="0" y="64" class="gtd">10:15</text><text x="74" y="64" class="gtb">Los Angeles</text><text x="240" y="64" class="gtd" text-anchor="end">840</text><line x1="0" y1="72" x2="240" y2="72" class="grl"/><text x="0" y="86" class="gtd">11:00</text><text x="74" y="86" class="gtb">Berlin</text><text x="240" y="86" class="gtd" text-anchor="end">720</text><line x1="0" y1="94" x2="240" y2="94" class="grl"/><text x="0" y="108" class="gtd">11:45</text><text x="74" y="108" class="gtb">New York</text><text x="240" y="108" class="gtd" text-anchor="end">610</text></svg></div><div class="gq">{{gal.q9}}</div></div></div></div>
+  </div>
+</section>
+
+
+<!-- ================= INSIDE THE APP: real screenshots (UI-close, fictional Northline data) ================= -->
+<section class="sec" id="app" aria-labelledby="h-app">
+  <div class="wrap">
+    <div class="ax-head reveal">
+      <div><div class="eyebrow">{{app.eyebrow}}</div><h2 class="h2" id="h-app">{{app.h2}}</h2></div>
+      <div><p>{{app.p}}</p><div class="ax-pre"><i></i><span>{{app.pre}}</span></div></div>
+    </div>
+    <div class="ax-tabbar reveal" role="tablist" aria-label="{{attr:app.tabs}}">
+      <button type="button" role="tab" id="axt0" aria-controls="axv0" aria-selected="true"><small>01</small><span>{{app.t0}}</span></button>
+      <button type="button" role="tab" id="axt1" aria-controls="axv1" aria-selected="false" tabindex="-1"><small>02</small><span>{{app.t1}}</span></button>
+      <button type="button" role="tab" id="axt2" aria-controls="axv2" aria-selected="false" tabindex="-1"><small>03</small><span>{{app.t2}}</span></button>
+      <button type="button" role="tab" id="axt3" aria-controls="axv3" aria-selected="false" tabindex="-1"><small>04</small><span>{{app.t3}}</span></button>
+      <button type="button" role="tab" id="axt4" aria-controls="axv4" aria-selected="false" tabindex="-1"><small>05</small><span>{{app.t4}}</span></button>
+      <button type="button" role="tab" id="axt5" aria-controls="axv5" aria-selected="false" tabindex="-1"><small>06</small><span>{{app.t5}}</span></button>
+    </div>
+    <div class="ax-stage reveal" id="axStage">
+    <div class="ax-view on" id="axv0" role="tabpanel" aria-labelledby="axt0" tabindex="0">
+      <div class="ax-win"><div class="ax-bar" aria-hidden="true"><i></i><i></i><i></i></div><div class="ax-shot">{{shot:chat}}<span class="ax-m m00" aria-hidden="true">1</span><span class="ax-m m01" aria-hidden="true">2</span><span class="ax-m m02" aria-hidden="true">3</span></div></div>
+      <ol class="ax-notes"><li><small>1</small><b>{{app.n00}}</b><p>{{app.n00p}}</p></li><li><small>2</small><b>{{app.n01}}</b><p>{{app.n01p}}</p></li><li><small>3</small><b>{{app.n02}}</b><p>{{app.n02p}}</p></li></ol>
+    </div>
+    <div class="ax-view" id="axv1" role="tabpanel" aria-labelledby="axt1" tabindex="0">
+      <div class="ax-win"><div class="ax-bar" aria-hidden="true"><i></i><i></i><i></i></div><div class="ax-shot">{{shot:approvals}}<span class="ax-m m10" aria-hidden="true">1</span><span class="ax-m m11" aria-hidden="true">2</span><span class="ax-m m12" aria-hidden="true">3</span></div></div>
+      <ol class="ax-notes"><li><small>1</small><b>{{app.n10}}</b><p>{{app.n10p}}</p></li><li><small>2</small><b>{{app.n11}}</b><p>{{app.n11p}}</p></li><li><small>3</small><b>{{app.n12}}</b><p>{{app.n12p}}</p></li></ol>
+    </div>
+    <div class="ax-view" id="axv2" role="tabpanel" aria-labelledby="axt2" tabindex="0">
+      <div class="ax-win"><div class="ax-bar" aria-hidden="true"><i></i><i></i><i></i></div><div class="ax-shot">{{shot:data-access}}<span class="ax-m m20" aria-hidden="true">1</span><span class="ax-m m21" aria-hidden="true">2</span><span class="ax-m m22" aria-hidden="true">3</span></div></div>
+      <ol class="ax-notes"><li><small>1</small><b>{{app.n20}}</b><p>{{app.n20p}}</p></li><li><small>2</small><b>{{app.n21}}</b><p>{{app.n21p}}</p></li><li><small>3</small><b>{{app.n22}}</b><p>{{app.n22p}}</p></li></ol>
+    </div>
+    <div class="ax-view" id="axv3" role="tabpanel" aria-labelledby="axt3" tabindex="0">
+      <div class="ax-win"><div class="ax-bar" aria-hidden="true"><i></i><i></i><i></i></div><div class="ax-shot">{{shot:health}}<span class="ax-m m30" aria-hidden="true">1</span><span class="ax-m m31" aria-hidden="true">2</span><span class="ax-m m32" aria-hidden="true">3</span></div></div>
+      <ol class="ax-notes"><li><small>1</small><b>{{app.n30}}</b><p>{{app.n30p}}</p></li><li><small>2</small><b>{{app.n31}}</b><p>{{app.n31p}}</p></li><li><small>3</small><b>{{app.n32}}</b><p>{{app.n32p}}</p></li></ol>
+    </div>
+    <div class="ax-view" id="axv4" role="tabpanel" aria-labelledby="axt4" tabindex="0">
+      <div class="ax-win"><div class="ax-bar" aria-hidden="true"><i></i><i></i><i></i></div><div class="ax-shot">{{shot:sign-in}}<span class="ax-m m40" aria-hidden="true">1</span><span class="ax-m m41" aria-hidden="true">2</span><span class="ax-m m42" aria-hidden="true">3</span></div></div>
+      <ol class="ax-notes"><li><small>1</small><b>{{app.n40}}</b><p>{{app.n40p}}</p></li><li><small>2</small><b>{{app.n41}}</b><p>{{app.n41p}}</p></li><li><small>3</small><b>{{app.n42}}</b><p>{{app.n42p}}</p></li></ol>
+    </div>
+    <div class="ax-view ax-phv" id="axv5" role="tabpanel" aria-labelledby="axt5" tabindex="0">
+      <div class="ax-phones">
+        <div class="ax-ph1"><div class="ax-scr">{{shot:phone-chat}}</div><span class="ax-m m50" aria-hidden="true">1</span></div>
+        <div class="ax-ph1"><div class="ax-scr">{{shot:phone-history}}</div><span class="ax-m m51" aria-hidden="true">2</span></div>
+        <div class="ax-ph1"><div class="ax-scr">{{shot:phone-data-access}}</div><span class="ax-m m52" aria-hidden="true">3</span></div>
+      </div>
+      <ol class="ax-notes"><li><small>1</small><b>{{app.n50}}</b><p>{{app.n50p}}</p></li><li><small>2</small><b>{{app.n51}}</b><p>{{app.n51p}}</p></li><li><small>3</small><b>{{app.n52}}</b><p>{{app.n52p}}</p></li></ol>
+    </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= SECURITY ================= -->
+<section class="sec bg-paper" id="guvenlik" aria-labelledby="h-sec">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div><div class="eyebrow">{{sec.eyebrow}}</div><h2 class="h2" id="h-sec">{{sec.h2}}</h2></div>
+      <p class="sub">{{sec.sub}}</p>
+    </div>
+
+    <div class="console reveal" id="console" aria-hidden="true">
+      <div class="con-h"><b>{{sec.consoleT}}</b><span>{{sec.consoleS}}</span><div class="live"><i></i><span>{{sec.live}}</span></div></div>
+      <div class="srow shead"><span>{{sec.time}}</span><span>{{sec.role}}</span><span>{{sec.in}}</span><span class="ph3"><b>{{sec.c1}}</b><b>{{sec.c2}}</b><b>{{sec.c3}}</b></span><span>{{sec.verdict}}</span></div>
+      <div class="stream" id="stream"></div>
+      <div class="con-f"><span><svg viewBox="0 0 16 16"><rect x="3.5" y="7" width="9" height="7" rx="1.6"/><path d="M5.5 7V5.2a2.5 2.5 0 0 1 5 0V7"/></svg><b>{{sec.log}}</b></span></div>
+    </div>
+
+    <div class="layers">
+      <div class="lbox reveal">
+        <div class="lhead"><h3>{{sec.layersT}}</h3><p>{{sec.layersS}}</p></div>
+        <svg class="lyr" id="lyr" viewBox="-160 0 840 470" role="img" aria-label="{{attr:sec.layersT}}"></svg>
+      </div>
+      <div class="ledger">
+        <div class="lg reveal s27"><b>0</b><p>{{sec.n1}}</p></div>
+        <div class="lg reveal s28"><b>0</b><p>{{sec.n2}}</p></div>
+        <div class="lg reveal s29"><b>0</b><p>{{sec.n3}}</p></div>
+        <div class="lg reveal s30"><b>{{sec.n4v}}</b><p>{{sec.n4}}</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= STORY B: install ================= -->
+<section class="story" id="kurulum" aria-labelledby="h-b">
+  <div class="pin"><div class="wrap">
+    <div>
+      <div class="eyebrow">{{ins.eyebrow}}</div>
+      <h2 id="h-b">{{ins.h2}}</h2>
+      <div class="steps-nav" id="navB">
+        <div class="rail"><b></b></div>
+        <div class="sn on"><div class="t"><small>01</small><span>{{ins.t0}}</span></div><p>{{ins.p0}}</p></div>
+        <div class="sn"><div class="t"><small>02</small><span>{{ins.t1}}</span></div><p>{{ins.p1}}</p></div>
+        <div class="sn"><div class="t"><small>03</small><span>{{ins.t2}}</span></div><p>{{ins.p2}}</p></div>
+        <div class="sn"><div class="t"><small>04</small><span>{{ins.t3}}</span></div><p>{{ins.p3}}</p></div>
+        <div class="sn"><div class="t"><small>05</small><span>{{ins.t4}}</span></div><p>{{ins.p4}}</p></div>
+        <div class="sn"><div class="t"><small>06</small><span>{{ins.t5}}</span></div><p>{{ins.p5}}</p></div>
+      </div>
+      <div class="pct" aria-hidden="true"><span>{{story.progress}}</span> <b class="pctv">{{pct:0}}</b></div>
+    </div>
+    <div class="scene-box" id="boxB" aria-hidden="true">
+      <div class="scene" id="sceneB">
+        <div class="cam" id="camB"><div class="cami" id="camBi">
+        <svg class="iso" id="isoB" width="720" height="680" viewBox="0 0 720 680"></svg>
+        <div class="card2" id="cReq"><div class="c2h"><span class="led" id="led"></span><span>{{in.server}}</span><span class="os">linux · x86_64</span></div>
+          <div class="rq"><span class="tick"></span><span>{{in.r1}}</span></div><div class="rq"><span class="tick"></span><span>{{in.r2}}</span></div><div class="rq"><span class="tick"></span><span>{{in.r3}}</span></div><div class="rq"><span class="tick"></span><span>{{in.r4}}</span></div></div>
+        <div class="anno vi s31" id="pPkg"><span id="hash">sha256 · …</span></div>
+        <div class="anno ok" id="sigOk"><span class="ai"><svg viewBox="0 0 16 16"><circle cx="8" cy="6.5" r="4.3"/><path d="M6 10.3l-1 4.2 3-1.6 3 1.6-1-4.2"/><path d="M6.3 6.6l1.2 1.2 2.3-2.4"/></svg></span><span>{{in.sig}}</span></div>
+        <div class="anno ok" id="pSvc"><span class="ai"><svg viewBox="0 0 16 16"><path d="M3.5 8.5l3 3 6-7"/></svg></span><b class="s32" id="svcN">0/4</b> <span>{{in.svc}}</span></div>
+        <div class="anno vi" id="pOut"><span class="ai"><svg viewBox="0 0 16 16"><path d="M5 11l6-6M6.5 5H11v4.5"/></svg></span><span>{{in.out}}</span></div>
+        <div class="anno no" id="pIn"><span class="ai"><svg viewBox="0 0 16 16"><path d="M4.5 4.5l7 7M11.5 4.5l-7 7"/></svg></span><span>{{in.inbound}}</span></div>
+        <div class="anno vi" id="pRo"><span class="ai"><svg viewBox="0 0 16 16"><path d="M1.5 8s2.4-4.5 6.5-4.5S14.5 8 14.5 8 12.1 12.5 8 12.5 1.5 8 1.5 8z"/><circle cx="8" cy="8" r="2"/></svg></span><span>{{in.ro}}</span></div>
+        <div class="card2" id="cSchema"><div class="c2h"><span>{{in.schema}}</span></div><div class="n"><span id="tblN">0</span> <small>{{in.tables}}</small></div><div id="schemaList"></div></div>
+        <div class="zlabel" id="lZoneB">{{in.zone}}</div>
+        <div class="ilabel" id="lCenB">{{sc.central}}</div>
+        <div class="ilabel" id="lTeamB"><span>{{sc.team}}</span> <small>{{in.invites}}</small></div>
+        <div class="sc" id="iBubble">{{in.first}}</div>
+        <div class="anno ok" id="pReady"><span class="ai"><svg viewBox="0 0 16 16"><path d="M3.5 8.5l3 3 6-7"/></svg></span><b class="s32">{{in.ready}}</b><span class="sub">{{in.day}}</span></div>
+        </div></div>
+      </div>
+    </div>
+  </div></div>
+</section>
+
+<!-- ================= AUDIENCES ================= -->
+<section class="sec bg-paper" id="kimler" aria-labelledby="h-aud">
+  <div class="wrap">
+    <div class="reveal"><div class="eyebrow">{{aud.eyebrow}}</div><h2 class="h2" id="h-aud">{{aud.h2}}</h2></div>
+    <div class="aud">
+      <div class="au reveal"><div class="who"><i><svg viewBox="0 0 24 24"><path d="M5 19c1.5-4 3.5-6 7-9 2-1.7 4-4 4.5-7 3 .5 3.5 1 4 4-3 .5-5.3 2.5-7 4.5-3 3.5-5 5.5-9 7"/><path d="M8 13l3 3"/></svg></i><span>{{aud.w1}}</span></div><blockquote>{{aud.q1}}</blockquote><p>{{aud.p1}}</p></div>
+      <div class="au reveal"><div class="who"><i><svg viewBox="0 0 24 24"><path d="M3 10l9-6 9 6v10H3z"/><path d="M9 20v-6h6v6"/></svg></i><span>{{aud.w2}}</span></div><blockquote>{{aud.q2}}</blockquote><p>{{aud.p2}}</p></div>
+      <div class="au reveal"><div class="who"><i><svg viewBox="0 0 24 24"><path d="M3 21V8l6-4v17M9 21V10l6-3v14M15 21V12l6-2v11M2 21h20"/></svg></i><span>{{aud.w3}}</span></div><blockquote>{{aud.q3}}</blockquote><p>{{aud.p3}}</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= PRICING + FAQ ================= -->
+<section class="sec bg-white" id="sss" aria-labelledby="h-faq">
+  <div class="wrap">
+    <div class="price reveal">
+      <div><h2>{{price.h}}</h2><p>{{price.p}}</p></div>
+      <a class="btn btn-primary" href="#demo"><span>{{price.btn}}</span> <span class="arr">→</span></a>
+    </div>
+    <div class="faq">
+      <div class="reveal"><div class="eyebrow">{{faq.eyebrow}}</div><h2 id="h-faq">{{faq.h2}}</h2></div>
+      <div class="reveal"><details open><summary><span>{{faq.q0}}</span><span class="pl"></span></summary><p>{{faq.a0}}</p></details>
+<details><summary><span>{{faq.q1}}</span><span class="pl"></span></summary><p>{{faq.a1}}</p></details>
+<details><summary><span>{{faq.q2}}</span><span class="pl"></span></summary><p>{{faq.a2}}</p></details>
+<details><summary><span>{{faq.q3}}</span><span class="pl"></span></summary><p>{{faq.a3}}</p></details>
+<details><summary><span>{{faq.q4}}</span><span class="pl"></span></summary><p>{{faq.a4}}</p></details>
+<details><summary><span>{{faq.q5}}</span><span class="pl"></span></summary><p>{{faq.a5}}</p></details>
+<details><summary><span>{{faq.q6}}</span><span class="pl"></span></summary><p>{{faq.a6}}</p></details>
+<details><summary><span>{{faq.q7}}</span><span class="pl"></span></summary><p>{{faq.a7}}</p></details>
+<details><summary><span>{{faq.q8}}</span><span class="pl"></span></summary><p>{{faq.a8}}</p></details>
+<details><summary><span>{{faq.q9}}</span><span class="pl"></span></summary><p>{{faq.a9}}</p></details>
+<details><summary><span>{{faq.q10}}</span><span class="pl"></span></summary><p>{{faq.a10}}</p></details>
+<details><summary><span>{{faq.q11}}</span><span class="pl"></span></summary><p>{{faq.a11}}</p></details></div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= CONTACT ================= -->
+<section class="sec bg-paper" id="demo" aria-labelledby="h-demo">
+  <div class="wrap contact">
+    <div class="reveal">
+      <div class="eyebrow">{{ct.eyebrow}}</div>
+      <h2 id="h-demo">{{ct.h2}}</h2>
+      <p class="sub">{{ct.sub}}</p>
+      <div class="cpoints"><div><b>1</b><span>{{ct.p1}}</span></div><div><b>2</b><span>{{ct.p2}}</span></div><div><b>3</b><span>{{ct.p3}}</span></div></div>
+    </div>
+    <div class="contact-card reveal" id="contact">
+      <h3>{{ct.mailH}}</h3>
+      <p>{{ct.mailP}}</p>
+      <a class="btn btn-primary" href="mailto:guner.kaan@outlook.com"><span>{{ct.mailBtn}}</span> <span class="arr" aria-hidden="true">→</span></a>
+      <p class="mail">guner.kaan@outlook.com</p>
+      <small>{{ct.note}}</small>
+    </div>
+  </div>
 </section>

@@ -4,12 +4,24 @@
   "langName": "Türkçe",
   "skip": "İçeriğe geç",
   "langNav": "Dil",
+  "mainNav": "Bölümler",
   "legalNav": "Yasal metinler",
   "draft": "Taslak",
   "pages": {
-    "home": { "title": "Loquein", "description": "Loquein: çok yakında.", "status": "Çok yakında." },
-    "privacy-notice": { "title": "KVKK Aydınlatma Metni", "description": "Taslak: KVKK aydınlatma metni." },
-    "privacy": { "title": "Gizlilik Politikası", "description": "Taslak: gizlilik politikası." },
-    "cookies": { "title": "Çerez Politikası", "description": "Taslak: çerez politikası." }
+    "home": {
+      "title": "Loquein"
+    },
+    "privacy-notice": {
+      "title": "KVKK Aydınlatma Metni",
+      "description": "Taslak: KVKK aydınlatma metni."
+    },
+    "privacy": {
+      "title": "Gizlilik Politikası",
+      "description": "Taslak: gizlilik politikası."
+    },
+    "cookies": {
+      "title": "Çerez Politikası",
+      "description": "Taslak: çerez politikası."
+    }
   }
 }
