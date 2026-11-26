@@ -69,13 +69,18 @@ jobs:
           CF_ACCESS_CLIENT_SECRET: ${{ secrets.CF_ACCESS_CLIENT_SECRET }}
         run: |
           css=$(grep -o '/assets/css/site\.[0-9a-f]*\.css' dist/index.html | head -n 1)
+          code=000
           for i in $(seq 1 30); do
-            code=$(curl -s -o /dev/null -w '%{http_code}' -H "CF-Access-Client-Id: $CF_ACCESS_CLIENT_ID" \
-              -H "CF-Access-Client-Secret: $CF_ACCESS_CLIENT_SECRET" "https://preview.loquein.com$css")
-            [ "$code" = "200" ] && echo "preview is serving $css" && exit 0
+            # A curl error (exit 6: the name does not resolve yet on a first deploy) is one failed try, not the end
+            # of the step: bash -e would otherwise stop at the failed command substitution. %{http_code} prints 000.
+            code=$(curl -s -o /dev/null -w '%{http_code}' --max-time 10 -H "CF-Access-Client-Id: $CF_ACCESS_CLIENT_ID" \
+              -H "CF-Access-Client-Secret: $CF_ACCESS_CLIENT_SECRET" "https://preview.loquein.com$css") || curl_exit=$?
+            [ "$code" = "200" ] && echo "preview is serving $css (try $i)" && exit 0
+            echo "try $i: http $code curl exit ${curl_exit:-0}"
+            curl_exit=
             sleep 5
           done
-          echo "::error title=Preview not reachable::https://preview.loquein.com$css answered $code after 150 s"
+          echo "::error title=Preview not reachable::https://preview.loquein.com$css answered $code after 30 tries (150 s)"
           exit 1
       - name: Install browsers
         run: npx playwright install --with-deps chromium firefox webkit

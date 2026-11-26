@@ -1,5 +1,11 @@
 # Changelog
 
+## LP-1d — 2026-11-26
+- Deploy: "Wait until preview serves this build" counts a curl error (exit 6, name not yet resolvable on a first deploy) as one
+  failed try; each try has a 10 s limit and logs the HTTP code and curl exit.
+- Header and privacy specs name the evidence on failure: every value and header name when a header count is wrong, and the
+  DOM elements that name a third-party host.
+
 ## LP-1c — 2026-11-26
 - Home pages TR/EN/DE: the approved landing design v13 (hero, both scroll stories, product cards, app tabs, security
   console and layers, install story, audiences, pricing, FAQ, contact), light theme, rendered per language at build time.
