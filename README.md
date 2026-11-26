@@ -1,6 +1,6 @@
 # loquein-site
 
-The loquein.com landing page: a static site (Turkish `/`, English `/en/`, German `/de/` plus legal pages) built by
+The loquein.com landing page: a static site (English `/`, Turkish `/tr/`, German `/de/` plus legal pages) built by
 a zero-dependency Node script and served by one Cloudflare Worker with static assets. The Worker itself only answers
 `/api/*` (the demo form endpoint, a `503 not_ready` stub until LP-1b). No cookies, no storage, no third-party requests;
 every response carries a strict CSP and the security header set from `site/static/_headers` / `worker/headers.ts`.

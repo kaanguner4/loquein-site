@@ -24,7 +24,7 @@
     return document.getElementById(id);
   }
   /* I18N = this page's strings (key -> text), DATA = {lang: scene data}; both come from the build (content/<lang>/home-script.json).
-   Every visible text is already in the HTML of /, /en/ or /de/; the script only fills the scenes. */
+   Every visible text is already in the HTML of /, /tr/ or /de/; the script only fills the scenes. */
   function tr(key) {
     return I18N[key] || "";
   }

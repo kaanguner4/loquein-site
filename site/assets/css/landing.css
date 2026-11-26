@@ -6375,8 +6375,14 @@ html[lang="de"] .hero h1 {
   }
 }
 @media (max-width: 380px) {
+  /* icon only; the label stays for screen readers (display: none would leave the link without a name) */
   .signin span {
-    display: none;
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
   }
   .signin {
     padding: 0 11px;

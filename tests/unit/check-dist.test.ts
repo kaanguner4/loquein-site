@@ -8,14 +8,16 @@ import { checkLinks } from "../../scripts/check-links.mjs";
 
 const NOW = Date.parse("2026-11-22T00:00:00Z");
 const O = "https://loquein.com";
+const APP = "https://app.loquein.com";
+const LOCAL_APP = "http://localhost:5173";
 
-const page = (lang: string, self: string, body: string, alternates?: string) => `<!DOCTYPE html>
+const page = (lang: string, self: string, body: string, alternates?: string, signIn = APP) => `<!DOCTYPE html>
 <html lang="${lang}">
 <head><title>T</title><meta name="description" content="d">
 <link rel="canonical" href="${O}${self}">
 ${alternates ?? `<link rel="alternate" hreflang="${lang}" href="${O}${self}">\n<link rel="alternate" hreflang="x-default" href="${O}${self}">`}
 <link rel="stylesheet" href="/a.css"></head>
-<body><main id="main">${body}</main></body></html>`;
+<body><header><a class="signin" href="${signIn}">Sign in</a></header><main id="main">${body}</main></body></html>`;
 
 function makeDist(files: Record<string, string>, { expires = "2027-11-21T23:59:59Z" } = {}) {
   const dir = mkdtempSync(path.join(tmpdir(), "dist-"));
@@ -25,7 +27,7 @@ function makeDist(files: Record<string, string>, { expires = "2027-11-21T23:59:5
     "sitemap.xml": "<urlset/>",
     "404.html": '<!DOCTYPE html><html lang="tr"><head><title>404</title></head><body></body></html>',
     "a.css": "",
-    ".well-known/security.txt": `Contact: mailto:x@example.org\nExpires: ${expires}\nPreferred-Languages: tr, en, de\nCanonical: ${O}/.well-known/security.txt\n`,
+    ".well-known/security.txt": `Contact: mailto:x@example.org\nExpires: ${expires}\nPreferred-Languages: en, tr, de\nCanonical: ${O}/.well-known/security.txt\n`,
     "index.html": page("tr", "/", "<h1>ok</h1>"),
     ...files,
   };
@@ -92,6 +94,41 @@ describe("check-dist", () => {
     expect(found).toContain(`index.html: hreflang="en" page ${O}/en/ does not link back with hreflang="tr"`);
   });
 
+  it("accepts exactly the two sign-in targets; production accepts only the app", () => {
+    expect(problems({ "index.html": page("tr", "/", "<h1>x</h1>", undefined, APP) })).toEqual([]);
+    expect(problems({ "index.html": page("tr", "/", "<h1>x</h1>", undefined, LOCAL_APP) })).toEqual([]);
+    const prod = problems({ "index.html": page("tr", "/", "<h1>x</h1>", undefined, LOCAL_APP) }, { production: true });
+    expect(prod).toContain(`index.html: sign-in link ${LOCAL_APP} is not ${APP}`);
+  });
+
+  for (const [name, target] of [
+    ["another host", "https://app.example.org"],
+    ["the app with a path", `${APP}/login`],
+    ["the app over http", "http://app.loquein.com"],
+    ["localhost on another port", "http://localhost:3000"],
+  ]) {
+    it(`fails on a sign-in link to ${name}`, () => {
+      const found = problems({ "index.html": page("tr", "/", "<h1>x</h1>", undefined, target) });
+      expect(found).toContain(`index.html: sign-in link ${target} is not ${APP} or ${LOCAL_APP}`);
+      expect(found).toContain(`index.html: external link ${target} not in the allowlist`);
+    });
+  }
+
+  it("fails on a missing, a doubled and a new-tab sign-in link", () => {
+    const none = page("tr", "/", "<h1>x</h1>").replace(/<a class="signin"[^>]*>Sign in<\/a>/, "");
+    expect(problems({ "index.html": none })).toContain(
+      "index.html: expected exactly one sign-in link (a.signin), found 0",
+    );
+    const two = page("tr", "/", `<a class="signin" href="${APP}">again</a>`);
+    expect(problems({ "index.html": two })).toContain(
+      "index.html: expected exactly one sign-in link (a.signin), found 2",
+    );
+    const tab = page("tr", "/", "<h1>x</h1>").replace('class="signin"', 'class="signin" target="_blank"');
+    expect(problems({ "index.html": tab })).toContain(
+      `index.html: sign-in link has target="_blank" (it opens in the same tab)`,
+    );
+  });
+
   it("fails on a wrong lang, missing title, description and canonical", () => {
     const found = problems({ "index.html": '<!DOCTYPE html><html lang="fr"><head></head><body></body></html>' });
     for (const rule of [/lang> is "fr"/, /missing <title>/, /missing meta description/, /canonical is ""/]) {
@@ -124,7 +161,7 @@ describe("check-dist", () => {
 describe("check-links", () => {
   it("passes a clean fixture", () => {
     const dir = makeDist({
-      "index.html": page("tr", "/", '<a href="/#main">x</a><a href="mailto:guner.kaan@outlook.com">m</a>'),
+      "index.html": page("tr", "/", '<a href="/#main">x</a><a href="mailto:hello@loquein.com">m</a>'),
     });
     expect(checkLinks(dir).problems).toEqual([]);
   });

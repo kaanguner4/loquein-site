@@ -3,7 +3,7 @@
 import { expect, HOME_PATHS, PAGES, test } from "./fixtures";
 
 const OUTSIDE = "https://example.org/";
-const SKIP_LABEL: Record<string, string> = { "/": "Girişi geç", "/en/": "Skip intro", "/de/": "Intro überspringen" };
+const SKIP_LABEL: Record<string, string> = { "/": "Skip intro", "/tr/": "Girişi geç", "/de/": "Intro überspringen" };
 
 for (const path of HOME_PATHS) {
   test(`intro: ${path} from another site plays; the skip button is focused and ends it`, async ({ page }) => {
@@ -36,7 +36,7 @@ test("intro: Escape ends it", async ({ page }) => {
 });
 
 test("intro: a typed address (no referrer) plays it, and it ends by itself", async ({ page }) => {
-  await page.goto("/en/", { referer: undefined, waitUntil: "load" });
+  await page.goto("/", { referer: undefined, waitUntil: "load" });
   await expect(page.locator("#intro")).toBeVisible();
   await expect(page.locator("#intro"), "intro did not end by itself").toHaveCount(0, { timeout: 8000 });
   await expect(page.locator("#hero")).toHaveClass(/\bready\b/);

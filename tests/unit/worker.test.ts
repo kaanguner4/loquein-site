@@ -69,10 +69,10 @@ describe("unknown API routes", () => {
 
 describe("non-API paths", () => {
   it("are handed to the assets binding unchanged", async () => {
-    const { res, assets } = call("GET", "/en/");
+    const { res, assets } = call("GET", "/tr/");
     expect(await (await res).text()).toBe("asset");
     expect(assets).toHaveBeenCalledOnce();
-    expect(new URL((assets.mock.calls[0][0] as Request).url).pathname).toBe("/en/");
+    expect(new URL((assets.mock.calls[0][0] as Request).url).pathname).toBe("/tr/");
   });
 });
 

@@ -13,7 +13,7 @@ export interface Route {
 
 export const ROUTES: Route[] = JSON.parse(readFileSync(path.join(ROOT, "site/routes.json"), "utf8")).pages;
 export const HOME = ROUTES.find((r) => r.id === "home") as Route;
-export const LANGS = ["tr", "en", "de"] as const;
+export const LANGS = ["en", "tr", "de"] as const;
 
 // Every page the site serves, from the built sitemap (so the specs follow the build, not a hand list).
 function sitemapPaths(): string[] {
@@ -29,6 +29,10 @@ function sitemapPaths(): string[] {
 
 export const PAGES = sitemapPaths();
 export const HOME_PATHS = Object.values(HOME.paths);
+// The two targets of the header sign-in link (one build setting, APP_URL: scripts/build.mjs). The default is the
+// production app; the preview deploy builds, and its specs run, with the local app.
+export const APP_URLS = { production: "https://app.loquein.com", preview: "http://localhost:5173" };
+export const EXPECTED_APP_URL = process.env.APP_URL || APP_URLS.production;
 export const NOT_FOUND_PATH = "/this-page-does-not-exist/";
 
 // Cloudflare Access service token for the preview host. Added only to requests for the site's own origin,
@@ -43,7 +47,7 @@ export function accessHeaders(): Record<string, string> {
 export const ALLOWED_COOKIES = (process.env.ALLOWED_COOKIES ?? "").split(",").filter(Boolean);
 
 // A page on the site itself, used as the referrer of an internal visit.
-export const INTERNAL_PATH = "/en/privacy/";
+export const INTERNAL_PATH = "/privacy/";
 
 export const test = base.extend<{ accessAuth: undefined }>({
   accessAuth: [

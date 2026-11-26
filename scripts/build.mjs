@@ -3,11 +3,21 @@
 import { createHash } from "node:crypto";
 import { cp, mkdir, readdir, readFile, rm, writeFile } from "node:fs/promises";
 import path from "node:path";
+import { APP_URLS, LANGS, ORIGIN } from "./lib/dist.mjs";
 import { SHOTS } from "./lib/shots.mjs";
 
 export const ROOT = path.resolve(import.meta.dirname, "..");
-export const ORIGIN = "https://loquein.com";
-export const LANGS = ["tr", "en", "de"];
+export { LANGS, ORIGIN };
+
+// The one build setting: where the header "Sign in" link points. Production default; the preview deploy sets
+// APP_URL=http://localhost:5173. Any other value fails the build (check-dist refuses it as well).
+export function appUrl(env = process.env) {
+  const value = env.APP_URL || APP_URLS.production;
+  if (!Object.values(APP_URLS).includes(value)) {
+    throw new Error(`APP_URL must be ${Object.values(APP_URLS).join(" or ")}, got "${value}"`);
+  }
+  return value;
+}
 
 const SITE = path.join(ROOT, "site");
 const DIST = path.join(ROOT, "dist");
@@ -179,7 +189,7 @@ function alternatesFor(page) {
   const links = LANGS.filter((l) => page.paths[l]).map(
     (l) => `<link rel="alternate" hreflang="${l}" href="${ORIGIN}${page.paths[l]}">`,
   );
-  const fallback = page.paths.tr ?? page.paths[LANGS.find((l) => page.paths[l])];
+  const fallback = page.paths.en ?? page.paths[LANGS.find((l) => page.paths[l])];
   links.push(`<link rel="alternate" hreflang="x-default" href="${ORIGIN}${fallback}">`);
   return links.join("\n");
 }
@@ -234,6 +244,7 @@ export async function build() {
     templates[name] = await readFile(path.join(SITE, "templates", `${name}.html`), "utf8");
   }
   const home = pages.find((p) => p.id === "home");
+  const signInUrl = appUrl();
   const { css, preloads, images, jsOn } = await buildAssets();
   const homeScripts = {};
   for (const lang of LANGS) homeScripts[lang] = await buildHomeScript(lang);
@@ -272,6 +283,8 @@ export async function build() {
           navInstall: copy["nav.install"],
           navFaq: copy["nav.faq"],
           navCta: copy["nav.cta"],
+          signInUrl,
+          signIn: copy["nav.signin"],
           langNav: lookup(content, lang, "langNav"),
           langSwitch: langSwitchFor(page, lang, home, content),
           main,
